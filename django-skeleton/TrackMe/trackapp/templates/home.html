@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Tracker</title>
+
+    <link href="/static/css/bootstrap.css" rel="stylesheet">  <!--Bootstrap CSS-->
+    <link href="/static/css/main.css" rel="stylesheet">  <!--Bootstrap CSS-->
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> <!--jQueryUI-->
+
+    <script>
+      $(document).ready(function(){
+          $('#main_search').keypress(function(e){
+            if(e.keyCode==13)
+               window.location = "search?q="+$("#main_search").val();
+          });
+      });
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Main Content -->
+      <input id="main_search" type="text" placeholder="Search" class="form-control">
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+  </body>
+</html>

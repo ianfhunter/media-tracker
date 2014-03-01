@@ -1,0 +1,50 @@
+#main_search{
+    position: fixed;
+    width: 50%;
+    top: 10px;
+    left: 25%;
+    margin: 0 auto 0;
+}
+#header{
+    background-color: grey;
+    position: fixed;
+    height: 50px;
+    width: 100%;
+}
+
+.card{
+    margin-top:70px;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    display: inline-table;
+    width: 31.5%;
+    margin-left: 1pc;
+}
+#subtitle{
+    white-space:nowrap;
+    padding-left:3em;
+    font-size: 50%;
+}
+.card-comments{
+    text-align: center;
+    padding-top: 10px !important;
+    padding-bottom: 0px !important;
+    margin-bottom: -10px !important;
+}
+.review{
+    max-height: 100px;
+    overflow: hidden;
+}
+#cover{
+    max-height: 250px;
+    max-width: 250px
+}
+#cover_container{
+    text-align: center;
+}
+#status_selector{
+    width: 100px;
+}
+#episode_selector{
+    width: 50px;
+}
