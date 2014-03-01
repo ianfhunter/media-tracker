@@ -1,0 +1,14 @@
+#main_search{
+    position: fixed;
+    width: 50%;
+    top: 10px;
+    left: 25%;
+    margin: 0 auto 0;
+}
+
+#results{
+    position: relative;
+    top:50px;
+    width: 70%;
+    left:15%;
+}

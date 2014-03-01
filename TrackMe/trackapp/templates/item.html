@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Tracker</title>
+
+    <link href="/static/css/bootplus.css" rel="stylesheet">  <!--Bootstrap CSS-->
+
+    <link href="/static/css/search.css" rel="stylesheet">  <!--Bootstrap CSS-->
+    <link href="/static/css/item.css" rel="stylesheet">  <!--Bootstrap CSS-->
+
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> <!--jQueryUI-->
+    <script src="/static/js/bootstrap.js"></script>
+
+    <script>
+
+      $(document).ready(function(){
+          $('#main_search').keypress(function(e){
+            if(e.keyCode==13)
+               window.location = "search?q="+$("#main_search").val();
+          });
+          $('.review_expand').click(function() {
+            item = $(this).parent().parent().parent().find(".review");
+            if(item.css("max-height") != "100%"){
+              item.css("max-height","100%");              
+            }else{
+              item.css("max-height","100px");              
+            }
+          });
+      });
+
+    </script>
+  </head>
+
+  <body>
+
+    <!-- Main Content -->
+    <div id="header"> </div>
+    <input id="main_search" type="text" placeholder="Search" class="form-control">
+
+    <!-- Title Card -->
+    <div class="card">
+       <h3 class="card-heading simple">{{item.name}} <span id="subtitle"> &nbsp;{{item.total_views}} views  - {{item.average_num_stars}}/5</span></h3>
+           <div class="card-body">
+       <div id="cover_container">
+         <img src="{{item.cover_photo.url}}" id="cover" />
+       </div>
+          {{item.description}}
+       </div>
+    </div>
+
+    <!-- Progress Card -->
+    <div class="card_container">
+      <div class="card inner_card" style="display:compact">
+         <h3 class="card-heading simple">My Status</h3>
+         <div class="card-body">
+            <b>Status:</b> 
+            
+            <select id="status_selector" >
+              <option value="watching">Watching</option>
+              <option value="watched" selected="selected">Watched</option>
+              <option value="towatch">To Watch</option>
+              <option value="dropped">Dropped</option>
+              <option value="avoid">Avoid</option>
+            </select>
+            <input id="episode_selector" value=0 type="number" /> - 132/{{item.amount}}
+
+
+            <p />
+            <b>Progress:</b>
+            <div class="progress progress-striped active">
+              <div class="bar" style="width: 40%;"></div>
+            </div>
+            <b>Tags:</b> 
+            {% if tags %}
+              {% for t in tags %}
+              <a href="#">{{t.name}}</a>
+              {% endfor %}
+            {% endif %}
+         </div>
+         <div class="card-comments">
+            <div class="comments-collapse-toggle">
+               <a data-toggle="collapse"  href="#c1-comments">More Info ▼ <i class="icon-angle-down"></i></a>
+            </div>
+            <div id="c1-comments" class="comments collapse">
+               <div class="media">
+                 <b>Producers:</b> Viz Media<p />
+                 <b>Purchase: </b> <a href="http://www.amazon.co.uk/s/?field-keywords={{item.name}}">Amazon</a>
+
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="card inner_card" style="display:compact">
+         <h3 class="card-heading simple">Add Your Review</h3>
+         <div class="card-body">
+            <textarea id="review_box" type="text" placeholder="" class="form-control" ></textarea>
+         </div>
+      </div>
+
+
+    </div>
+
+    <div class="card">
+       <h3 class="card-heading simple">Reviews</h3>
+       {% for review in reviews %}
+         <div class="review-container">
+           <div class="card-body">
+              <img src="{{review.author.avatar.url}}"> {{review.author.username}} - {{review.author.amount_of_reviews}} Reviews
+              <p />
+              <div class="review">
+                {{review.contents}}
+              </div>
+           </div>
+           <div class="card-comments">
+              <div class="comments-collapse-toggle">
+                 <a data-toggle="collapse" class="review_expand">More Info ▼  <i class="icon-angle-down"></i></a>
+              </div>
+           </div>
+         </div>
+       {% endfor %}
+       </div>
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+  </body>
+</html>
