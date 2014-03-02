@@ -7,6 +7,7 @@
     <meta name="author" content="">
     <title>Tracker</title>
 
+    <link href="//fonts.googleapis.com/css?family=Berkshire Swash&subset=latin" rel="stylesheet" type="text/css">
     <link href="/static/css/bootstrap.css" rel="stylesheet">  <!--Bootstrap CSS-->
     <link href="/static/css/main.css" rel="stylesheet">  <!--Bootstrap CSS-->
 
@@ -62,9 +63,14 @@
   </head>
 
   <body>
+    {% if not user %}
     <a href="#" data-toggle="modal" data-target="#myModal" id="login">Sign Up / Login</a>
+    {% else %}
+    <a href="user/{{user.id}}" id="login"> {{user.username}}</a>
 
+    {% endif %}
     <!-- Main Content -->
+      <h1>Trackr</h1>
       <input id="main_search" type="text" placeholder="Search" class="form-control">
 
     <!-- Bootstrap core JavaScript

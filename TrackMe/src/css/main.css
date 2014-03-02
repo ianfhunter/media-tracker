@@ -8,12 +8,23 @@
     margin: 0 auto 0;
 }
 #login, #signup{
-    float: right;
+    right: 0;
+    position: absolute;
     padding-right: 5px;
+    top: 0;
+    background-color: aliceblue;
+    padding: 3px;
 }
 .modal-header, .modal-footer{
     text-align: center;
 }
 .loginform{
     margin-bottom: 10px;
+}
+h1{
+    font-family: 'Berkshire Swash', sans-serif;
+    font-size: 800%;
+    color:rgb(226, 10, 157);
+    text-align: center;
+    margin-top: 10%;
 }

@@ -5,10 +5,31 @@
     left: 25%;
     margin: 0 auto 0;
 }
+#header{
+    background-color: grey;
+    position: fixed;
+    height: 50px;
+    width: 100%;
+    z-index: 1;
+}
+
 
 #results{
     position: relative;
-    top:50px;
+    top:60px;
     width: 70%;
     left:15%;
+}
+#no_results{
+    position: relative;
+    top:70px;
+    left:40%;
+    font-size: 200%;
+}
+
+#sitename{
+    font-family: 'Berkshire Swash', sans-serif;
+    color:rgb(226, 10, 157);    
+    margin-left: 130px;
+    margin-top: 10px;
 }

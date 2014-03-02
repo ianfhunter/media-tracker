@@ -3,6 +3,9 @@ from models import Trackable,Review,Tag,Background,User
 from django.core.context_processors import csrf
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
+import json
+import urllib,urllib2
+
 
 import hashlib, uuid
 def createHash(password):
@@ -10,8 +13,15 @@ def createHash(password):
     return hashlib.sha512(password + salt).hexdigest()
 
 def home(request):
-    img = Background.objects.get(id=1)
-    d = {"image":img}
+    imgs = Background.objects.order_by('id')
+    users = User.objects.order_by('id')
+    d = {}
+    if len(imgs) > 0:
+        d["image"] = imgs[0]
+    if len(users) > 0:
+        d["user"] = users[0]
+
+
     return render_to_response('home.html', d)
 
 def search(request):
@@ -29,6 +39,16 @@ def item(request,value):
     reviews = Review.objects.filter(review_of=item)
     tags = Tag.objects.filter(items=item)
 
+    if not item.cover_photo:
+        print item.name
+        data = json.load(urllib2.urlopen('https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q='+urllib.quote(item.name.encode("utf8"))))
+        if data:
+            urllib.urlretrieve(data["responseData"]["results"][0]["url"], "documents/covers/"+str(item.id) + ".jpg")
+            item.cover_photo = "covers/"+str(item.id)+".jpg"
+            item.release_date = "2014-02-04"
+            item.save()
+
+
     d = {
         "item": item,
         "reviews": reviews,
@@ -36,12 +56,15 @@ def item(request,value):
     }
     return render_to_response('item.html', d)
 
+def user(request,value):
+    user = User.objects.get(pk=int(value))
+    d = {"user":user}
+    return render_to_response('user.html',d)
+
 @csrf_exempt
 def login(request):
     print request.POST["username"]
 
     user = User(username=request.POST['username'], password=createHash(request.POST['password']),email=request.POST['email'])
     user.save()
-    img = Background.objects.get(id=1)
-    d = {"image":img}
-    return redirect('/trackapp/home')
+    return redirect('/home')

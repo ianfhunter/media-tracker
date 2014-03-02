@@ -4,12 +4,15 @@
     top: 10px;
     left: 25%;
     margin: 0 auto 0;
+    z-index: 1;
+
 }
 #header{
     background-color: grey;
     position: fixed;
     height: 50px;
     width: 100%;
+    z-index: 1;
 }
 
 .card, .card_container{
@@ -42,7 +45,7 @@
 }
 #cover{
     max-height: 250px;
-    max-width: 250px
+    max-width: 250px;
 }
 #cover_container{
     text-align: center;
@@ -59,4 +62,30 @@
     right: 9px;
     height: 100px;
     position: relative;
+}
+/* User Pages
+*/
+.rec_cover{
+    max-width: 130px;
+    max-height: 200px;
+}
+.watching_cover{
+    max-width: 130px;
+    max-height: 200px;
+}
+.watching_hover{
+    opacity: 0.0;
+    top: -150px;
+    position: relative;
+    left: 14px;
+    margin-bottom: -80px
+}
+.watching_hover:hover{
+    opacity: 0.9;
+}
+#sitename{
+    font-family: 'Berkshire Swash', sans-serif;
+    color:rgb(226, 10, 157);    
+    margin-left: 130px;
+    margin-top: 4px;
 }

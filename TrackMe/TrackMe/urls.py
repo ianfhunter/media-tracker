@@ -16,7 +16,7 @@ import trackapp.urls
 urlpatterns = patterns('',
 
     # urls specific to this app
-    url(r'^trackapp/', include(trackapp.urls)),
+    url(r'', include(trackapp.urls)),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

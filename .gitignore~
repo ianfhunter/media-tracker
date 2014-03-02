@@ -1,0 +1,5 @@
+*.pyc
+database.db
+TrackMe/documents/
+TrackMe/populate/*.dat
+TrackMe/populate/*.list

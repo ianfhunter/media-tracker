@@ -35,78 +35,61 @@
           });
       });
 
-      function update_status(){
-        console.log($("#status_selector").val());
-        console.log($("#episode_selector").val());
-
-      }
-
     </script>
   </head>
 
   <body>
 
     <!-- Main Content -->
-    <div id="header"> <h3 id="sitename">Trackr</h3></div>
+    <div id="header"> </div>
     <input id="main_search" type="text" placeholder="Search" class="form-control">
 
     <!-- Title Card -->
     <div class="card">
-       <h3 class="card-heading simple">{{item.name}} <span id="subtitle"> &nbsp;{{item.total_views}} views  - {{item.average_num_stars}}/5 Stars</span></h3>
+       <h3 class="card-heading simple">{{user.username}} <span id="subtitle"> &nbsp;{{user.amount_of_reviews}} reviews</span></h3>
            <div class="card-body">
        <div id="cover_container">
-         <img src="{{item.cover_photo.url}}" id="cover" />
+         {% if user.avatar %}
+         <img src="{{user.avatar.url}}" id="cover" onerror="alert('The image could not be loaded.')" />
+         {% else %}
+         <img src="/static/images/cover.jpg" id="cover" />
+         {% endif %}
        </div>
           {{item.description}}
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
        </div>
     </div>
 
     <!-- Progress Card -->
     <div class="card_container">
       <div class="card inner_card" style="display:compact">
-         <h3 class="card-heading simple">My Status</h3>
+         <h3 class="card-heading simple">Statistics</h3>
          <div class="card-body">
-            <b>Status:</b> 
-            
-            <select id="status_selector" onChange="update_status()">
-              <option value="watching">Watching</option>
-              <option value="watched" selected="selected">Watched</option>
-              <option value="towatch">To Watch</option>
-              <option value="dropped">Dropped</option>
-              <option value="avoid">Avoid</option>
-            </select>
-            <input id="episode_selector" value="0" type="number" onChange="update_status()" min="0" max="{{item.amount}}" /> - Total {{item.amount}} eps.
-
+            <b>Reviews: </b>{{user.amount_of_reviews}}
 
             <p />
-            <b>Progress:</b>
+            <b>Overall:</b>
             <div class="progress progress-striped active">
               <div class="bar" style="width: 40%;"></div>
+              <div class="bar bar-warning" style="width: 10%;"></div>
+              <div class="bar bar-danger" style="width: 15%;"></div>
             </div>
-            <b>Tags:</b> 
-            {% if tags %}
-              {% for t in tags %}
-              <a href="#">{{t.name}}</a>
-              {% endfor %}
+            <b>Most Relevant Tags:</b> 
+            {% if not user.awards %}
+              None
             {% endif %}
-         </div>
-         <div class="card-comments">
-            <div class="comments-collapse-toggle">
-               <a data-toggle="collapse"  href="#c1-comments">More Info ▼ <i class="icon-angle-down"></i></a>
-            </div>
-            <div id="c1-comments" class="comments collapse">
-               <div class="media">
-                 <b>Producers:</b> Viz Media<p />
-                 <b>Purchase: </b> <a href="http://www.amazon.co.uk/s/?field-keywords={{item.name}}">Amazon</a>
+            <p />
+            <b>Awards:</b> 
+            {% if not user.awards %}
+              None
+            {% endif %}
 
-               </div>
-            </div>
          </div>
       </div>
       <div class="card inner_card" style="display:compact">
-         <h3 class="card-heading simple">Add Your Review</h3>
+         <h3 class="card-heading simple">Recommended Series</h3>
          <div class="card-body">
-            <textarea id="review_box" type="text" placeholder="" class="form-control" ></textarea>
+            <img class="rec_cover" src="/static/images/cover.jpg" />
          </div>
       </div>
 
@@ -114,23 +97,19 @@
     </div>
 
     <div class="card">
-       <h3 class="card-heading simple">Reviews</h3>
-       {% for review in reviews %}
-         <div class="review-container">
+       <h3 class="card-heading simple">Quick Increment</h3>
+         <div class="watching-container">
            <div class="card-body">
-              <img src="{{review.author.avatar.url}}"> {{review.author.username}} - {{review.author.amount_of_reviews}} Reviews
-              <p />
-              <div class="review">
-                {{review.contents}}
+              <img class="watching_cover" src="/static/images/cover.jpg" />
+              <div class="watching_hover">
+                <svg height="100" width="100">
+                  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="0" fill="grey" />
+                  <text x="25" y="62" font-size="300%" fill="white">+1</text>
+                </svg>
               </div>
-           </div>
-           <div class="card-comments">
-              <div class="comments-collapse-toggle">
-                 <a data-toggle="collapse" class="review_expand">More Info ▼  <i class="icon-angle-down"></i></a>
-              </div>
+              1123/5231
            </div>
          </div>
-       {% endfor %}
        </div>
     </div>
 
