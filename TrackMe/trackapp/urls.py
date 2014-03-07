@@ -9,6 +9,8 @@ urlpatterns = patterns('',
     url(r'^home', 'trackapp.views.home'),
     url(r'^search$', 'trackapp.views.search'),
     url(r'^item/(?P<value>\d+)$', 'trackapp.views.item'),
+    url(r'^item/(?P<value>\d+)/status_update/$', 'trackapp.views.status_update'),
     url(r'^user/(?P<value>\d+)$', 'trackapp.views.user'),
     url(r'^login/$', 'trackapp.views.login'),
+    url(r'^/?$', 'trackapp.views.home'),
 )

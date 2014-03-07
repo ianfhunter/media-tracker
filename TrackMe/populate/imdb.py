@@ -2,7 +2,7 @@ import re
 import sqlite3 as lite
 
 # ftp://ftp.fu-berlin.de/pub/misc/movies/database/movies.list.gz
-con = lite.connect('../database.db')
+con = lite.connect('database.db')
 cur = con.cursor()    
 
 with open("movies.list","r") as f:

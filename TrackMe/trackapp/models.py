@@ -14,8 +14,10 @@ class ProgressStatus(enum.Enum):
     NOT_STARTED = 0
     FINISHED = 1
     IN_PROGRESS = 2
-    DROPPED = 2
-    AVOID = 2
+    DROPPED = 3
+    AVOID = 4
+    WISHLIST = 5
+
 
 # Create your models here.
 class Trackable(models.Model):
@@ -48,8 +50,11 @@ class Review(models.Model):
 
 class Status(models.Model):
     who = models.ForeignKey(User)
+    what = models.ForeignKey(Trackable)
     progress = enum.EnumField(ProgressStatus, default=ProgressStatus.NOT_STARTED)
     amount = models.IntegerField()
+    class Meta:
+        unique_together = ('who', 'what')
 class Tag(models.Model):
     items = models.ManyToManyField(Trackable)
     name = models.CharField(max_length=30)

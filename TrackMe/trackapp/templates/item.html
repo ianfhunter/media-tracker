@@ -21,10 +21,12 @@
     <script>
 
       $(document).ready(function(){
+          //enable searchbar
           $('#main_search').keypress(function(e){
             if(e.keyCode==13)
                window.location = "/search?q="+$("#main_search").val();
           });
+          //expand condese
           $('.review_expand').click(function() {
             item = $(this).parent().parent().parent().find(".review");
             if(item.css("max-height") != "100%"){
@@ -33,12 +35,73 @@
               item.css("max-height","100px");              
             }
           });
+
+          //fill out status
+          {% if status.progress %}
+          console.log("We have your status")
+          progress = {{status.progress}};
+          switch(progress){
+            case 1:
+              //watched
+              $(".progress").html('<div class="bar bar-success" style="width: 100%;"></div>');
+              $("#status_selector").children("option")[3].selected = true;
+              break;
+            case 2:
+              //watching
+              $(".progress").html('<div class="bar" style="width: '+({{status.amount}}/{{item.amount}} * 100) +'%;"></div>')
+              $("#status_selector").children("option")[2].selected = true;
+              break;
+            case 5:
+                $("#status_selector").children("option")[5].selected = true;
+  //            $(".progress").html('<div class="bar" style="width: 40%;"></div>')
+              break;
+            case 3:
+              $(".progress").html('<div class="bar bar-danger" style="width: '+({{status.amount}}/{{item.amount}} * 100) +'%;"></div>')
+              $("#status_selector").children("option")[4].selected = true;
+              break;
+            case 4:
+  //            $(".progress").html('<div class="bar" style="width: 40%;"></div>')
+              $("#status_selector").children("option")[1].selected = true;
+              break;
+          }
+
+          {% endif %}
       });
+      function handleError(data){
+        console.log(data);
+      }
+      function handleData(data){
+        console.log(data);
+      }
 
       function update_status(){
-        console.log($("#status_selector").val());
-        console.log($("#episode_selector").val());
-
+        //TODO: Verify that form info is okay.
+        type = $("#status_selector").val();
+        ep = $("#episode_selector").val();
+        $.ajax({
+          type: "POST",
+          url: "{{item.id}}/status_update/",
+          data: {type: type,episode: ep,user_id: {{user.id}}},
+          success: handleData,
+          error: handleError
+        });
+        switch(type){
+          case "watched":
+            $(".progress").html('<div class="bar bar-success" style="width: 100%;"></div>')
+            break;
+          case "watching":
+            $(".progress").html('<div class="bar" style="width: '+(ep/{{item.amount}} * 100) +'%;"></div>')
+            break;
+          case "towatch":
+//            $(".progress").html('<div class="bar" style="width: 40%;"></div>')
+            break;
+          case "dropped":
+            $(".progress").html('<div class="bar bar-danger" style="width: '+(ep/{{item.amount}} * 100) +'%;"></div>')
+            break;
+          case "avoid":
+//            $(".progress").html('<div class="bar" style="width: 40%;"></div>')
+            break;
+        }
       }
 
     </script>
@@ -47,7 +110,7 @@
   <body>
 
     <!-- Main Content -->
-    <div id="header"> <h3 id="sitename">Trackr</h3></div>
+    <div id="header"> <a id="homelink" href="/"><h3 id="sitename">Trackr</h3></a></div>
     <input id="main_search" type="text" placeholder="Search" class="form-control">
 
     <!-- Title Card -->
@@ -69,19 +132,20 @@
             <b>Status:</b> 
             
             <select id="status_selector" onChange="update_status()">
+              <option value="none" selected="selected">None</option>
               <option value="watching">Watching</option>
-              <option value="watched" selected="selected">Watched</option>
+              <option value="watched" >Watched</option>
               <option value="towatch">To Watch</option>
               <option value="dropped">Dropped</option>
               <option value="avoid">Avoid</option>
             </select>
             <input id="episode_selector" value="0" type="number" onChange="update_status()" min="0" max="{{item.amount}}" /> - Total {{item.amount}} eps.
-
+            
 
             <p />
-            <b>Progress:</b>
+            <b>Progress:</b> 
             <div class="progress progress-striped active">
-              <div class="bar" style="width: 40%;"></div>
+
             </div>
             <b>Tags:</b> 
             {% if tags %}
@@ -97,8 +161,8 @@
             <div id="c1-comments" class="comments collapse">
                <div class="media">
                  <b>Producers:</b> Viz Media<p />
-                 <b>Purchase: </b> <a href="http://www.amazon.co.uk/s/?field-keywords={{item.name}}">Amazon</a>
-
+                 <b>Purchase: </b> <a href="http://www.amazon.co.uk/s/?field-keywords={{item.name}}">Amazon</a><br />
+                 <b>Torrent: </b><a href="http://www.nyaa.se/?page=search&cats=0_0&filter=0&term={{item.name}}">Nyaa</a>
                </div>
             </div>
          </div>
@@ -115,6 +179,9 @@
 
     <div class="card">
        <h3 class="card-heading simple">Reviews</h3>
+
+                Soon™
+
        {% for review in reviews %}
          <div class="review-container">
            <div class="card-body">

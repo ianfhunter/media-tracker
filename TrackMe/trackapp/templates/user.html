@@ -67,6 +67,9 @@
          <div class="card-body">
             <b>Reviews: </b>{{user.amount_of_reviews}}
 
+            {% for s in statuses %}
+                {{s.progress}}
+            {% endfor %}
             <p />
             <b>Overall:</b>
             <div class="progress progress-striped active">
