@@ -4,3 +4,6 @@ TrackMe/documents/
 TrackMe/populate/*.dat
 TrackMe/populate/*.list
 *~
+*.egg
+*.egg-info
+pip-log.txt
