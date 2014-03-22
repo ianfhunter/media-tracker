@@ -7,14 +7,13 @@ from django.shortcuts import redirect
 import json
 import urllib,urllib2
 
-
 import hashlib, uuid
 def createHash(password):
     salt = uuid.uuid4().hex
     return hashlib.sha512(password + salt).hexdigest()
 
 def home(request):
-    imgs = Background.objects.order_by('id')
+    imgs = Background.objects.order_by('?')
     users = User.objects.order_by('id')
     d = {}
     if len(imgs) > 0:

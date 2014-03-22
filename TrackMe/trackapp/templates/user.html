@@ -67,15 +67,80 @@
          <div class="card-body">
             <b>Reviews: </b>{{user.amount_of_reviews}}
 
-            {% for s in statuses %}
-                {{s.progress}}
-            {% endfor %}
+
             <p />
             <b>Overall:</b>
             <div class="progress progress-striped active">
-              <div class="bar" style="width: 40%;"></div>
+              <script type="text/javascript">
+                var fill_bar = 
+                {% for s in statuses %}
+                    {{s.progress}} + "," + 
+                {% endfor %}
+                "";
+                status_vals = fill_bar.split(",");
+                status_vals.pop();  //remove empty element at end.
+
+                total = 0;
+
+                NOT_STARTED = 0
+                FINISHED = 1
+                IN_PROGRESS = 2
+                DROPPED = 3
+                AVOID = 4
+                WISHLIST = 5
+
+                ns_total = 0;
+                f_total = 0;
+                ip_total = 0;
+                d_total = 0;
+                a_total = 0;
+                w_total = 0;
+
+
+                for(i = 0;i != status_vals.length; i++){
+                  total += 1;
+                  switch(parseInt(status_vals[i])){
+                    case NOT_STARTED:
+                      ns_total += 1;
+                      break;
+                    case FINISHED:
+                      f_total += 1;
+                      break;
+                    case IN_PROGRESS:
+                      ip_total += 1;
+                      break;
+                    case DROPPED:
+                      d_total += 1;
+                      break;
+                    case AVOID:
+                      a_total += 1;
+                      break;
+                    case WISHLIST:
+                      w_total += 1;
+                      break;
+                    default:
+                      console.log(status_vals[i])
+                  }
+                }
+                console.log("Total Reviews: " + total);
+                console.log(ns_total);
+                console.log(f_total);
+                console.log(ip_total);
+                console.log(d_total);
+                console.log(a_total);
+                console.log(w_total);
+
+                $(".progress").append('<div class="bar bar-warning" style="width: '+ns_total/total* 100+'%;"></div>') //How much I have not started
+                $(".progress").append('<div class="bar bar-success" style="width: '+f_total/total* 100+'%;"></div>')  //How much I Finished
+                $(".progress").append('<div class="bar bar-info" style="width: '+ip_total/total * 100+'%;"></div>')         //How much I am Watching 
+                $(".progress").append('<div class="bar bar-danger" style="width: '+d_total/total* 100+'%;"></div>')   //How much I have dropped
+                $(".progress").append('<div class="bar bar-default" style="width: '+a_total/total * 100+'%;"></div>')         //How much I have avoided
+                $(".progress").append('<div class="bar" style="width: '+w_total/total * 100+'%;"></div>')         //How much I have on my wishlist
+
+              </script>
+<!--               <div class="bar" style="width: 40%;"></div>
               <div class="bar bar-warning" style="width: 10%;"></div>
-              <div class="bar bar-danger" style="width: 15%;"></div>
+              <div class="bar bar-danger" style="width: 15%;"></div> -->
             </div>
             <b>Most Relevant Tags:</b> 
             {% if not user.awards %}
