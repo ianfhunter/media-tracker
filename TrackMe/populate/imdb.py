@@ -5,7 +5,7 @@ import sqlite3 as lite
 con = lite.connect('database.db')
 cur = con.cursor()    
 
-with open("movies.list","r") as f:
+with open("populate/movies.list","r") as f:
     for idx,line in enumerate(f):
         if(idx > 15):
 #            print re.search('".*?"',line).group(0)                    #name
