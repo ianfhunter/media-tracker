@@ -3,7 +3,7 @@ import sqlite3 as lite
 
 
 #populate trackables
-#os.system("python populate/anidb.py")
+os.system("python populate/anidb.py")
 
 
 con = lite.connect('database.db')

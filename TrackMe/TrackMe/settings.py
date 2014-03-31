@@ -1,11 +1,30 @@
 # Django settings for TrackMe
 import os
 
-DEBUG = True
+PRODUCTION = False
+
+if PRODUCTION:
+    DEBUG = False
+else:
+    DEBUG = True
+
 TEMPLATE_DEBUG = DEBUG
 
+#PRODUCTION ONLY
+ALLOWED_HOSTS = [
+                '*',
+                ]
+
+
+
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Ian Hunter', 'ianfhunter@gmail.com'),
+)
+
+if PRODUCTION:
+    SEND_BROKEN_LINK_EMAILS = True
+MANAGERS = (
+    ('Ian Hunter', 'ianfhunter@gmail.com'),
 )
 
 MANAGERS = ADMINS
