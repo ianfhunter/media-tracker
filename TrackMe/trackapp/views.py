@@ -42,17 +42,18 @@ def item(request,value):
 
 
     #scrape Google Images for cover
-    if not item.cover_photo:
+    if not item.cover_photo:   
         print item.name
         data = json.load(urllib2.urlopen('https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q='+urllib.quote(item.name.encode("utf8"))))
         if data and data["responseData"] and data["responseData"]["results"]:
             print "yes"
             urllib.urlretrieve(data["responseData"]["results"][0]["url"], "documents/covers/"+str(item.id) + ".jpg")
             item.cover_photo = "covers/"+str(item.id)+".jpg"
-            item.release_date = "2014-02-04"
+            item.release_date = "2014-02-04"    #Why is this here? :o
             item.save()
         else:
             print "no"
+            #Default image to be assigned here
 
     d = {
         "item": item,
