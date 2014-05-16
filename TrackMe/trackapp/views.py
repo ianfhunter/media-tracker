@@ -92,7 +92,6 @@ def status_update(request,value):
         everything_ok = False
     else:
         status = Status.objects.filter(what=value,who=request.POST["user_id"])
-        print status.count()
         if status.count() == 0:
             #create new status
             active_user = User.objects.get(pk=request.POST["user_id"])
@@ -114,7 +113,26 @@ def status_update(request,value):
             status = Status(who=active_user, what=active_item,progress=StatusEnum,amount=int(request.POST["episode"]))
             status.save()
         else:
-            #discard this one
-            print ""
+            #we have a status for this already
+            active_user = User.objects.get(pk=request.POST["user_id"])
+            active_item = Trackable.objects.get(pk=value)
+            active_type = request.POST["type"]
+            StatusEnum = ProgressStatus.NOT_STARTED
+
+            if active_type == "watching":
+                StatusEnum = ProgressStatus.IN_PROGRESS
+            if active_type == "watched":
+                StatusEnum = ProgressStatus.FINISHED
+            if active_type == "towatch":
+                StatusEnum = ProgressStatus.WISHLIST
+            if active_type == "dropped":
+                StatusEnum = ProgressStatus.DROPPED
+            if active_type == "avoid":
+               StatusEnum = ProgressStatus.AVOID
+
+            status = Status.objects.get(who=active_user,what=active_item)
+            status.progress = StatusEnum
+            status.amount = int(request.POST["episode"])
+            status.save()
     
     return HttpResponse({"submitted": everything_ok})

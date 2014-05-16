@@ -43,25 +43,30 @@
           switch(progress){
             case 1:
               //watched
+              console.log("WATCHED");
               $(".progress").html('<div class="bar bar-success" style="width: 100%;"></div>');
-              $("#status_selector").children("option")[3].selected = true;
+              $("#status_selector").children("option")[2].selected = true;
               break;
             case 2:
               //watching
+              console.log("WATCHING");
               $(".progress").html('<div class="bar" style="width: '+({{status.amount}}/{{item.amount}} * 100) +'%;"></div>')
-              $("#status_selector").children("option")[2].selected = true;
+              $("#status_selector").children("option")[1].selected = true;
               break;
             case 5:
-                $("#status_selector").children("option")[5].selected = true;
+                console.log("TO WATCH");
+                $("#status_selector").children("option")[3].selected = true;
   //            $(".progress").html('<div class="bar" style="width: 40%;"></div>')
               break;
             case 3:
+              console.log("DROPPED");
               $(".progress").html('<div class="bar bar-danger" style="width: '+({{status.amount}}/{{item.amount}} * 100) +'%;"></div>')
               $("#status_selector").children("option")[4].selected = true;
               break;
             case 4:
+              console.log("AVOID");
   //            $(".progress").html('<div class="bar" style="width: 40%;"></div>')
-              $("#status_selector").children("option")[1].selected = true;
+              $("#status_selector").children("option")[5].selected = true;
               break;
           }
 
@@ -120,7 +125,9 @@
        <div id="cover_container">
          <img src="{{item.cover_photo.url}}" id="cover" />
        </div>
-          {{item.description}}
+<!--          {{item.description}}   -->
+Ne nec altera accusata honestatis. Ne dolor iudico accumsan vim. Primis appellantur eum ne, id his oratio euismod, vix ex error mollis ullamcorper. Fastidii pertinax deterruisset ne ius, ea minim decore voluptaria nam. Vivendum recteque in ius. Apeirian efficiendi intellegam ut sea.
+
        </div>
     </div>
 
@@ -167,20 +174,22 @@
             </div>
          </div>
       </div>
-      <div class="card inner_card" style="display:compact">
-         <h3 class="card-heading simple">Add Your Review</h3>
-         <div class="card-body">
-            <textarea id="review_box" type="text" placeholder="" class="form-control" ></textarea>
-         </div>
-      </div>
 
 
     </div>
 
     <div class="card">
-       <h3 class="card-heading simple">Reviews</h3>
+       <h3 class="card-heading simple">Reviews & News Articles</h3>
 
-                Soon™
+              Cum ne odio magna corpora. Ei solum nobis consetetur mea. Graeco definiebas ne usu, no nec atqui persius explicari. Est epicurei voluptatum mediocritatem ea, vim solet nostrum officiis no.
+              <p />
+              Adhuc integre ponderum ei his. Etiam dissentias pri no, atqui docendi id vis. Nonumy periculis eu per, mutat prodesset voluptaria in his. In fastidii sententiae interesset vim. Denique fastidii cu qui, eu nihil labores his. Eos ne dolorem detracto, illud regione apeirian ea per, eu ullum aperiam vituperatoribus pro.
+
+              <hr style="border-color:#dddddd" />
+              Nec te movet adipiscing complectitur, pro eu nullam aperiam disputando, te sit purto vero tota. Postea aliquip at ius. Cu nobis inermis maiestatis quo, sed animal alienum adipisci ea, id elit iisque expetendis qui. Congue propriae pri ne, duo et viris vidisse reprimique. Suas idque per in, ius eu elit oporteat expetenda, vis id autem fugit.
+
+              <p />
+              Ne nec altera accusata honestatis. Ne dolor iudico accumsan vim. Primis appellantur eum ne, id his oratio euismod, vix ex error mollis ullamcorper. Fastidii pertinax deterruisset ne ius, ea minim decore voluptaria nam. Vivendum recteque in ius. Apeirian efficiendi intellegam ut sea.
 
        {% for review in reviews %}
          <div class="review-container">
