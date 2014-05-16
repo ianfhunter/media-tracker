@@ -4,7 +4,7 @@ from models import Trackable,Review,Tag,Background,User,Status,ProgressStatus
 from django.core.context_processors import csrf
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
-import json
+from rottentomatoes import RT
 import urllib,urllib2
 
 import hashlib, uuid
@@ -14,18 +14,27 @@ def createHash(password):
 
 def home(request):
     imgs = Background.objects.order_by('?')
+    if not imgs:
+        imgs = Background(obj="background/default_background.jpg")
+        imgs.save()
+        imgs = [imgs]
     users = User.objects.order_by('id')
     d = {}
-    if len(imgs) > 0:
-        d["image"] = imgs[0]
+    d["image"] = imgs[0]
+
     if len(users) > 0:
         d["user"] = users[0]
-
 
     return render_to_response('home.html', d)
 
 def search(request):
-    query =  request.GET.get('q')
+    #Should be passing the type of media so we can do different api calls
+    query = request.GET.get('q')
+
+    data = RT('my_api_key').search(query)
+    print data[0]["movie"]
+
+
     results =  Trackable.objects.filter(name__contains=query)
 
     if len(results) > 0:

@@ -72,7 +72,24 @@
     {% endif %}
     <!-- Main Content -->
       <h1>Trackr</h1>
-      <input id="main_search" type="text" placeholder="Search" class="form-control">
+<!--      <input id="main_search" type="text" placeholder="Search" class="form-control">-->
+
+<div class="input-prepend" id="search_container">
+  <!-- Search Bar -->
+  <input class="span2 form-control" id="main_search" type="text">
+  <!-- Search Dropdown-->
+  <select name="media">
+    <option value="">TV Show</option>
+    <option value="">Movie</option>
+    <option value="">Anime</option>
+    <option value="">Manga</option>
+    <option value="">Book</option>
+    <option value="">Game</option>
+  </select>
+</div>
+
+
+
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
