@@ -26,10 +26,13 @@ class Trackable(models.Model):
     description = models.CharField(max_length=1000)     #Game, Tv show, etc
     amount = models.IntegerField()                   #Amount of episodes, etc
     release_date = models.DateField()                #Release Date
-    average_num_stars = models.IntegerField()        #Average user rating
-    cover_photo = models.FileField(upload_to="covers")   #would you recommend this series?
-    # def __unicode__(self):
-    #     return self.name
+    average_num_stars = models.IntegerField()            #Average user rating
+    cover_photo = models.FileField(upload_to="covers")   #Cover 
+
+    #Meta information
+    director = models.CharField(max_length=200)
+    production = models.CharField(max_length=200)
+    runtime = models.IntegerField()                #Measured in minutes
 
 class User(models.Model):
     username = models.CharField(max_length=200)

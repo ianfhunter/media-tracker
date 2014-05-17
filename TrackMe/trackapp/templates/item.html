@@ -147,7 +147,7 @@
               <option value="dropped">Dropped</option>
               <option value="avoid">Avoid</option>
             </select>
-            <input id="episode_selector" value="0" type="number" onChange="update_status()" min="0" max="{{item.amount}}" /> - Total {{item.amount}} eps.
+            <input id="episode_selector" value="0" type="number" onChange="update_status()" min="0" max="{{item.amount}}" /> - {{item.amount}} Eps, {{item.runtime}} mins each
             
 
             <p />
@@ -168,7 +168,9 @@
             </div>
             <div id="c1-comments" class="comments collapse">
                <div class="media">
-                 <b>Producers:</b> Viz Media<p />
+                 <b>Producers:</b> {{item.production}}<p />
+                 <b>Director:</b> {{item.director}}<p />
+                 <br />
                  <b>Purchase: </b> <a href="http://www.amazon.co.uk/s/?field-keywords={{item.name}}">Amazon</a><br />
                  <b>Torrent: </b><a href="http://www.nyaa.se/?page=search&cats=0_0&filter=0&term={{item.name}}">Nyaa</a>
                </div>

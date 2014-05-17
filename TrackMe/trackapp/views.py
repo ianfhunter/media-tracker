@@ -55,12 +55,23 @@ def item(request,value):
     except ValueError:
         rating = 0
 
-    item = Trackable(name=data["Title"],amount=10,average_num_stars=rating,item_type="TV Show",description=data["Plot"])
+    item = Trackable(id=int(value[2:]),
+                    name=data["Title"],
+                    amount=10,
+                    average_num_stars=rating,
+                    item_type="TV Show",
+                    description=data["Plot"],
+                    director=data["Director"],
+                    production=data["Production"],
+                    runtime=int(''.join(i for i in data["Runtime"] if i.isdigit()))
+                    )
     # item = Trackable.objects.get(pk=int(value))
     # reviews = Review.objects.filter(review_of=item)
     # tags = Tag.objects.filter(items=item)
     
-    tags = [Tag(name=data["Genre"])]
+    tags = []
+    for genre in data["Genre"].split(","):
+        tags.append(Tag(name=genre))
     reviews = [Review(author="Rotten Tomatoes",contents=data["tomatoConsensus"])]
 
     user = User.objects.order_by('id')
