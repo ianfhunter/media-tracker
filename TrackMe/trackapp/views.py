@@ -49,13 +49,12 @@ def item(request,value):
 
     response = urllib2.urlopen("http://www.omdbapi.com/?i=" + value + "&tomatoes=true")
     data = json.load(response)   
-    print data
     try:
         rating = float(data["tomatoRating"])
     except ValueError:
         rating = 0
-
-    item = Trackable(id=int(value[2:]),
+  
+    item = Trackable(id=int("1" + value[2:]),    #Adding a 1 at the start, as IMDB ids can contain 'tt'
                     name=data["Title"],
                     amount=10,
                     average_num_stars=rating,
@@ -83,7 +82,6 @@ def item(request,value):
 
     #scrape Google Images for cover
     if not item.cover_photo:   
-        print item.name
         data = json.load(urllib2.urlopen('https://ajax.googleapis.com/ajax/services/search/images?v=1.0&q='+urllib.quote(item.name.encode("utf8"))))
         if data and data["responseData"] and data["responseData"]["results"]:
             print "yes"
