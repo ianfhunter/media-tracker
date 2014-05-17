@@ -47,13 +47,13 @@
 
     <!-- Title Card -->
     <div class="card">
-       <h3 class="card-heading simple">{{user.username}} <span id="subtitle"> &nbsp;{{user.amount_of_reviews}} reviews</span></h3>
+       <h3 class="card-heading simple">{{user.username}} <span id="subtitle"> Main User</span></h3>
            <div class="card-body">
        <div id="cover_container">
          {% if user.avatar %}
          <img src="{{user.avatar.url}}" id="cover" onerror="alert('The image could not be loaded.')" />
          {% else %}
-         <img src="/static/images/cover.jpg" id="cover" />
+         <img src="/media/avatars/default_avatar.png" id="avatar" />
          {% endif %}
        </div>
           {{item.description}}
@@ -169,14 +169,18 @@
        <h3 class="card-heading simple">Quick Increment</h3>
          <div class="watching-container">
            <div class="card-body">
-              <img class="watching_cover" src="/static/images/cover.jpg" />
-              <div class="watching_hover">
-                <svg height="100" width="100">
-                  <circle cx="50" cy="50" r="40" stroke="black" stroke-width="0" fill="grey" />
-                  <text x="25" y="62" font-size="300%" fill="white">+1</text>
-                </svg>
-              </div>
-              1123/5231
+
+              {% for s in statuses %}
+                <img class="watching_cover" src="/media/{{s.what.cover_photo}}" />
+                <div class="watching_hover">
+                  <svg height="100" width="100">
+                    <circle cx="50" cy="50" r="40" stroke="black" stroke-width="0" fill="grey" />
+                    <text x="25" y="62" font-size="300%" fill="white">+1</text>
+                  </svg>
+                </div>
+                {{s.what.name}} - 1123/5231 
+              {% endfor %}
+
            </div>
          </div>
        </div>

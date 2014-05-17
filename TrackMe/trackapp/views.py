@@ -119,7 +119,7 @@ def user(request,value):
 def login(request):
     print request.POST["username"]
 
-    user = User(username=request.POST['username'], password=createHash(request.POST['password']),email=request.POST['email'])
+    user = User(username=request.POST['username'], password=createHash(request.POST['password']))
     user.save()
     return redirect('/home')
 
