@@ -36,8 +36,10 @@ def search(request):
     data = json.load(response)   
 
     results = []
-    for item in data['Search']:
-        results.append(Trackable(name=item['Title'],id=item['imdbID']))
+    if 'Search' in data:
+        for item in data['Search']:
+            results.append(Trackable(name=item['Title'],id=item['imdbID']))
+
 
     if len(results) > 0:
         d = {"results": results}

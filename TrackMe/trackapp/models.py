@@ -44,7 +44,6 @@ class Review(models.Model):
     review_of = models.ForeignKey(Trackable)         #Item being reviewed
     author = models.CharField(max_length=100)         #Item being reviewed
     num_stars = models.IntegerField()                #Reviewer's Rating
-    plus_ones = models.IntegerField()                #likes, upvotes, etc of this review
     contents = models.CharField(max_length=10000)     #actual review
 
 class Status(models.Model):

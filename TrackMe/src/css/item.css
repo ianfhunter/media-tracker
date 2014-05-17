@@ -71,17 +71,21 @@
 }
 .watching_cover{
     max-width: 130px;
-    max-height: 200px;
+    height: 200px;
 }
 .watching_hover{
     opacity: 0.0;
     top: -150px;
     position: relative;
     left: 14px;
-    margin-bottom: -80px
+    margin-bottom: -80px;
+    display:table;
 }
 .watching_hover:hover{
     opacity: 0.9;
+}
+.watching_item{
+    display: inline-block;
 }
 #sitename{
     font-family: 'Berkshire Swash', sans-serif;
@@ -96,4 +100,7 @@
     padding: 0px 20px;
     border-bottom: 2px solid;
     border-color:#727272;
+}
+#increment_section{
+    padding: 0px 10px;
 }
