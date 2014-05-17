@@ -55,10 +55,14 @@ def item(request,value):
     except ValueError:
         rating = 0
 
-    item = Trackable(name=data["Title"],amount=10,average_num_stars=rating)
+    item = Trackable(name=data["Title"],amount=10,average_num_stars=rating,item_type="TV Show",description=data["Plot"])
     # item = Trackable.objects.get(pk=int(value))
     # reviews = Review.objects.filter(review_of=item)
     # tags = Tag.objects.filter(items=item)
+    
+    tags = [Tag(name=data["Genre"])]
+    reviews = [Review(author="Rotten Tomatoes",contents=data["tomatoConsensus"])]
+
     user = User.objects.order_by('id')
     if user:
         user = user[0]
@@ -82,8 +86,8 @@ def item(request,value):
 
     d = {
         "item": item,
-#        "reviews": reviews,
-#        "tags":tags
+        "reviews": reviews,
+        "tags":tags
     }
     if(user):
         status = Status.objects.filter(who=user,what=item)

@@ -36,11 +36,10 @@ class User(models.Model):
     date_created = models.DateField(default=datetime.date.today)
     password = models.CharField(max_length=100,unique=True)
     avatar = models.FileField(upload_to="avatars")
-    amount_of_reviews = models.IntegerField(default=0)
 
 class Review(models.Model):
     review_of = models.ForeignKey(Trackable)         #Item being reviewed
-    author = models.ForeignKey(User)         #Item being reviewed
+    author = models.CharField(max_length=100)         #Item being reviewed
     num_stars = models.IntegerField()                #Reviewer's Rating
     plus_ones = models.IntegerField()                #likes, upvotes, etc of this review
     contents = models.CharField(max_length=10000)     #actual review
@@ -52,6 +51,7 @@ class Status(models.Model):
     amount = models.IntegerField()
     class Meta:
         unique_together = ('who', 'what')
+
 class Tag(models.Model):
     items = models.ManyToManyField(Trackable)
     name = models.CharField(max_length=30)
