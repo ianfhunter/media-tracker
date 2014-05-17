@@ -4,10 +4,10 @@ from models import Trackable,Review,Tag,Background,User,Status,ProgressStatus
 from django.core.context_processors import csrf
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
-from rottentomatoes import RT
 import urllib,urllib2
-
+import json
 import hashlib, uuid
+
 def createHash(password):
     salt = uuid.uuid4().hex
     return hashlib.sha512(password + salt).hexdigest()
@@ -31,11 +31,13 @@ def search(request):
     #Should be passing the type of media so we can do different api calls
     query = request.GET.get('q')
 
-    data = RT('my_api_key').search(query)
-    print data[0]["movie"]
+    #Search for Items using OpenMovie DB API
+    response = urllib2.urlopen('http://www.omdbapi.com/?s=' + query.replace(' ','+'))
+    data = json.load(response)   
 
-
-    results =  Trackable.objects.filter(name__contains=query)
+    results = []
+    for item in data['Search']:
+        results.append(Trackable(name=item['Title'],id=item['imdbID']))
 
     if len(results) > 0:
         d = {"results": results}
@@ -44,10 +46,24 @@ def search(request):
     return render_to_response('search.html', d)
 
 def item(request,value):
-    item = Trackable.objects.get(pk=int(value))
-    reviews = Review.objects.filter(review_of=item)
-    tags = Tag.objects.filter(items=item)
-    user = User.objects.order_by('id')[0] 
+
+    response = urllib2.urlopen("http://www.omdbapi.com/?i=" + value + "&tomatoes=true")
+    data = json.load(response)   
+    print data
+    try:
+        rating = float(data["tomatoRating"])
+    except ValueError:
+        rating = 0
+
+    item = Trackable(name=data["Title"],amount=10,average_num_stars=rating)
+    # item = Trackable.objects.get(pk=int(value))
+    # reviews = Review.objects.filter(review_of=item)
+    # tags = Tag.objects.filter(items=item)
+    user = User.objects.order_by('id')
+    if user:
+        user = user[0]
+    else:
+        user = None
 
 
     #scrape Google Images for cover
@@ -66,8 +82,8 @@ def item(request,value):
 
     d = {
         "item": item,
-        "reviews": reviews,
-        "tags":tags
+#        "reviews": reviews,
+#        "tags":tags
     }
     if(user):
         status = Status.objects.filter(who=user,what=item)

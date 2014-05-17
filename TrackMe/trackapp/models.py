@@ -27,8 +27,6 @@ class Trackable(models.Model):
     amount = models.IntegerField()                   #Amount of episodes, etc
     release_date = models.DateField()                #Release Date
     average_num_stars = models.IntegerField()        #Average user rating
-    total_views = models.IntegerField()              #Total User Views
-    plus_ones = models.IntegerField()                #would you recommend this series?
     cover_photo = models.FileField(upload_to="covers")   #would you recommend this series?
     # def __unicode__(self):
     #     return self.name
