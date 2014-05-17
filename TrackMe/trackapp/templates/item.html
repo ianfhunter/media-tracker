@@ -120,14 +120,15 @@
 
     <!-- Title Card -->
     <div class="card">
-       <h3 class="card-heading simple">{{item.name}} <span id="subtitle"> &nbsp;{{item.total_views}} views  - {{item.average_num_stars}}/5 Stars</span></h3>
+       <h3 class="card-heading simple">{{item.name}} 
+         <!-- <span id="subtitle"> &nbsp;{{item.total_views}} views  - {{item.average_num_stars}}/5 Stars</span> -->
+         <span id="subtitle"> &nbsp;{{item.item_type}}</span>
+       </h3>
            <div class="card-body">
        <div id="cover_container">
          <img src="{{item.cover_photo.url}}" id="cover" />
        </div>
-<!--          {{item.description}}   -->
-Ne nec altera accusata honestatis. Ne dolor iudico accumsan vim. Primis appellantur eum ne, id his oratio euismod, vix ex error mollis ullamcorper. Fastidii pertinax deterruisset ne ius, ea minim decore voluptaria nam. Vivendum recteque in ius. Apeirian efficiendi intellegam ut sea.
-
+          {{item.description}}   
        </div>
     </div>
 
@@ -146,7 +147,7 @@ Ne nec altera accusata honestatis. Ne dolor iudico accumsan vim. Primis appellan
               <option value="dropped">Dropped</option>
               <option value="avoid">Avoid</option>
             </select>
-            <input id="episode_selector" value="0" type="number" onChange="update_status()" min="0" max="{{item.amount}}" /> - Total {{item.amount}} eps.
+            <input id="episode_selector" value="0" type="number" onChange="update_status()" min="0" max="{{item.amount}}" /> - {{item.amount}} Eps, {{item.runtime}} mins each
             
 
             <p />
@@ -167,7 +168,9 @@ Ne nec altera accusata honestatis. Ne dolor iudico accumsan vim. Primis appellan
             </div>
             <div id="c1-comments" class="comments collapse">
                <div class="media">
-                 <b>Producers:</b> Viz Media<p />
+                 <b>Producers:</b> {{item.production}}<p />
+                 <b>Director:</b> {{item.director}}<p />
+                 <br />
                  <b>Purchase: </b> <a href="http://www.amazon.co.uk/s/?field-keywords={{item.name}}">Amazon</a><br />
                  <b>Torrent: </b><a href="http://www.nyaa.se/?page=search&cats=0_0&filter=0&term={{item.name}}">Nyaa</a>
                </div>
@@ -180,31 +183,13 @@ Ne nec altera accusata honestatis. Ne dolor iudico accumsan vim. Primis appellan
 
     <div class="card">
        <h3 class="card-heading simple">Reviews & News Articles</h3>
-         <div class="review-content">
-
-              Cum ne odio magna corpora. Ei solum nobis consetetur mea. Graeco definiebas ne usu, no nec atqui persius explicari. Est epicurei voluptatum mediocritatem ea, vim solet nostrum officiis no.
-              <p />
-              Adhuc integre ponderum ei his. Etiam dissentias pri no, atqui docendi id vis. Nonumy periculis eu per, mutat prodesset voluptaria in his. In fastidii sententiae interesset vim. Denique fastidii cu qui, eu nihil labores his. Eos ne dolorem detracto, illud regione apeirian ea per, eu ullum aperiam vituperatoribus pro.
-         </div>
-         <div class="review-content">
-              Nec te movet adipiscing complectitur, pro eu nullam aperiam disputando, te sit purto vero tota. Postea aliquip at ius. Cu nobis inermis maiestatis quo, sed animal alienum adipisci ea, id elit iisque expetendis qui. Congue propriae pri ne, duo et viris vidisse reprimique. Suas idque per in, ius eu elit oporteat expetenda, vis id autem fugit.
-
-              <p />
-              Ne nec altera accusata honestatis. Ne dolor iudico accumsan vim. Primis appellantur eum ne, id his oratio euismod, vix ex error mollis ullamcorper. Fastidii pertinax deterruisset ne ius, ea minim decore voluptaria nam. Vivendum recteque in ius. Apeirian efficiendi intellegam ut sea.
-         </div>
-
        {% for review in reviews %}
          <div class="review-container">
            <div class="card-body">
-              <img src="{{review.author.avatar.url}}"> {{review.author.username}} - {{review.author.amount_of_reviews}} Reviews
+              {{review.author}}:
               <p />
               <div class="review">
                 {{review.contents}}
-              </div>
-           </div>
-           <div class="card-comments">
-              <div class="comments-collapse-toggle">
-                 <a data-toggle="collapse" class="review_expand">More Info ▼  <i class="icon-angle-down"></i></a>
               </div>
            </div>
          </div>

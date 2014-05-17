@@ -26,25 +26,24 @@ class Trackable(models.Model):
     description = models.CharField(max_length=1000)     #Game, Tv show, etc
     amount = models.IntegerField()                   #Amount of episodes, etc
     release_date = models.DateField()                #Release Date
-    average_num_stars = models.IntegerField()        #Average user rating
-    total_views = models.IntegerField()              #Total User Views
-    plus_ones = models.IntegerField()                #would you recommend this series?
-    cover_photo = models.FileField(upload_to="covers")   #would you recommend this series?
-    # def __unicode__(self):
-    #     return self.name
+    average_num_stars = models.IntegerField()            #Average user rating
+    cover_photo = models.FileField(upload_to="covers")   #Cover 
+
+    #Meta information
+    director = models.CharField(max_length=200)
+    production = models.CharField(max_length=200)
+    runtime = models.IntegerField()                #Measured in minutes
 
 class User(models.Model):
     username = models.CharField(max_length=200)
     date_created = models.DateField(default=datetime.date.today)
     password = models.CharField(max_length=100,unique=True)
     avatar = models.FileField(upload_to="avatars")
-    amount_of_reviews = models.IntegerField(default=0)
 
 class Review(models.Model):
     review_of = models.ForeignKey(Trackable)         #Item being reviewed
-    author = models.ForeignKey(User)         #Item being reviewed
+    author = models.CharField(max_length=100)         #Item being reviewed
     num_stars = models.IntegerField()                #Reviewer's Rating
-    plus_ones = models.IntegerField()                #likes, upvotes, etc of this review
     contents = models.CharField(max_length=10000)     #actual review
 
 class Status(models.Model):
@@ -54,6 +53,7 @@ class Status(models.Model):
     amount = models.IntegerField()
     class Meta:
         unique_together = ('who', 'what')
+
 class Tag(models.Model):
     items = models.ManyToManyField(Trackable)
     name = models.CharField(max_length=30)
