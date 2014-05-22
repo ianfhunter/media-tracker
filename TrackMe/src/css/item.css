@@ -1,11 +1,5 @@
-#main_search{
-    position: fixed;
-    width: 50%;
-    top: 10px;
-    left: 25%;
-    margin: 0 auto 0;
-    z-index: 1;
-
+#search_container{
+    margin-top: -45px;
 }
 #header{
     background-color: indigo;

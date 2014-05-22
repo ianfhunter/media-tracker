@@ -30,16 +30,21 @@ def home(request):
 def search(request):
     #Should be passing the type of media so we can do different api calls
     query = request.GET.get('q')
+    media_type = request.GET.get('type')
+    print query, media_type
 
-    #Search for Items using OpenMovie DB API
-    response = urllib2.urlopen('http://www.omdbapi.com/?s=' + query.replace(' ','+'))
-    data = json.load(response)   
+    if media_type == "TV Show":
+        #Search for Items using OpenMovie DB API
+        response = urllib2.urlopen('http://www.omdbapi.com/?s=' + query.replace(' ','+'))
+        data = json.load(response)   
 
-    results = []
-    if 'Search' in data:
-        for item in data['Search']:
-            results.append(Trackable(name=item['Title'],id=item['imdbID']))
+        results = []
+        if 'Search' in data:
+            for item in data['Search']:
+                results.append(Trackable(name=item['Title'],id=item['imdbID']))
 
+    else:
+        results = []
 
     if len(results) > 0:
         d = {"results": results}

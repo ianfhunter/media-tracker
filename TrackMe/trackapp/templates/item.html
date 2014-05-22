@@ -115,9 +115,21 @@
   <body>
 
     <!-- Main Content -->
-    <div id="header"> <a id="homelink" href="/"><h3 id="sitename">Trackr</h3></a></div>
-    <input id="main_search" type="text" placeholder="Search" class="form-control">
+    <div id="header"> <a id="homelink" href="/"><h3 id="sitename">Trackr</h3></a>
+    
+    <div id="search_container">
+      <input id="main_search" type="text" placeholder="Search" class="form-control">
+      <select id="main_search_dropdown" name="media">
+        <option value="">TV Show</option>
+        <option value="">Movie</option>
+        <option value="">Anime</option>
+        <option value="">Manga</option>
+        <option value="">Book</option>
+        <option value="">Game</option>
+      </select>
+    </div>
 
+  </div>
     <!-- Title Card -->
     <div class="card">
        <h3 class="card-heading simple">{{item.name}} 

@@ -8,7 +8,7 @@
     <title>Tracker</title>
 
     <link href="//fonts.googleapis.com/css?family=Berkshire Swash&subset=latin" rel="stylesheet" type="text/css">
-    <link href="/static/css/bootstrap.css" rel="stylesheet">  <!--Bootstrap CSS-->
+    <link href="/static/css/bootplus.css" rel="stylesheet">  <!--Bootstrap CSS-->
     <link href="/static/css/main.css" rel="stylesheet">  <!--Bootstrap CSS-->
 
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -43,7 +43,7 @@
       $(document).ready(function(){
           $('#main_search').keypress(function(e){
             if(e.keyCode==13)
-               window.location = "search?q="+$("#main_search").val();
+               window.location = "search?q="+$("#main_search").val() + "&type=" + $('#main_search_dropdown').find(":selected").text();;
           });
           $("#login_btn").click(function(){
             console.log("hi");
@@ -74,11 +74,11 @@
       <h1>Trackr</h1>
 <!--      <input id="main_search" type="text" placeholder="Search" class="form-control">-->
 
-<div class="input-prepend" id="search_container">
-  <!-- Search Bar -->
+<div class="input-prepend" id="search_home">
+  <!-- Search Bar -->  
   <input class="span2 form-control" id="main_search" type="text">
   <!-- Search Dropdown-->
-  <select name="media">
+  <select id="main_search_dropdown" name="media">
     <option value="">TV Show</option>
     <option value="">Movie</option>
     <option value="">Anime</option>

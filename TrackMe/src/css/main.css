@@ -26,3 +26,11 @@ h1{
     width: 400px;
     display: inline-block;
 }
+#search_home{
+width: 100%;
+text-align: center;
+margin-top: 40px;
+}
+#main_search_dropdown{
+    width: initial;
+}
