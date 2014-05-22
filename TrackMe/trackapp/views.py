@@ -5,7 +5,9 @@ from django.core.context_processors import csrf
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect
 import urllib,urllib2
+import datetime
 import json
+from xml.dom import minidom
 import hashlib, uuid
 
 def createHash(password):
@@ -41,8 +43,59 @@ def search(request):
         results = []
         if 'Search' in data:
             for item in data['Search']:
-                results.append(Trackable(name=item['Title'],id=item['imdbID']))
+                show = Trackable(name=item['Title'],
+                                 id=int("1" + item['imdbID'][2:]),
+                                 item_type="TV Show",
+                                 #filler
+                                 amount=1,
+                                 release_date=datetime.datetime.strptime("01-JAN-2000", "%d-%b-%Y"),
+                                 average_num_stars=0,
+                                 cover_photo=None,
+                                 director="",
+                                 production="",
+                                 runtime=0
+                                 )
+                show.save()
+                results.append(show)
 
+    elif media_type == "Game":
+        print 
+        req = urllib2.Request('http://thegamesdb.net/api/GetGamesList.php?name=' + query.replace(' ','+'))
+
+        #Need this, as some user agents are blocked
+        req.add_unredirected_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31')
+        source = urllib2.urlopen(req).read()
+
+        data = minidom.parseString(source)   
+
+        game = data.getElementsByTagName("Game")
+        results = []
+
+        for node in game:
+            for child in node.childNodes:
+                if child.localName == "GameTitle":
+                    name=child.childNodes[0].nodeValue
+                if child.localName == "id":
+                    game_id=child.childNodes[0].nodeValue
+
+            print name, "-" ,game_id
+            if name and game_id:
+                item = Trackable(name=name,
+                                 id=game_id,
+                                 item_type="Game",
+                                 #filler
+                                 amount=1,
+                                 release_date=datetime.datetime.strptime("01-JAN-2000", "%d-%b-%Y"),
+                                 average_num_stars=0,
+                                 cover_photo=None,
+                                 director="",
+                                 production="",
+                                 runtime=0
+                                 )
+                item.save()
+                results.append(item)
+            name = None
+            game_id = None
     else:
         results = []
 
@@ -54,31 +107,80 @@ def search(request):
 
 def item(request,value):
 
-    response = urllib2.urlopen("http://www.omdbapi.com/?i=" + value + "&tomatoes=true")
-    data = json.load(response)   
-    try:
-        rating = float(data["tomatoRating"])
-    except ValueError:
-        rating = 0
-  
-    item = Trackable(id=int("1" + value[2:]),    #Adding a 1 at the start, as IMDB ids can contain 'tt'
-                    name=data["Title"],
-                    amount=10,
-                    average_num_stars=rating,
-                    item_type="TV Show",
-                    description=data["Plot"],
-                    director=data["Director"],
-                    production=data["Production"],
-                    runtime=int(''.join(i for i in data["Runtime"] if i.isdigit()))
-                    )
-    # item = Trackable.objects.get(pk=int(value))
-    # reviews = Review.objects.filter(review_of=item)
-    # tags = Tag.objects.filter(items=item)
-    
-    tags = []
-    for genre in data["Genre"].split(","):
-        tags.append(Tag(name=genre))
-    reviews = [Review(author="Rotten Tomatoes",contents=data["tomatoConsensus"])]
+
+    item = Trackable.objects.get(pk=int(value))
+
+    if item.item_type == "TV Show":
+        response = urllib2.urlopen("http://www.omdbapi.com/?i=" + ("tt" + value[1:]) + "&tomatoes=true")
+        data = json.load(response)   
+        try:
+            rating = float(data["tomatoRating"])
+        except Exception:
+            rating = 0
+      
+        print data
+        item = Trackable(id=item.id,    #Adding a 1 at the start, as IMDB ids can contain 'tt'
+                        name=data["Title"],
+                        amount=10,
+                        average_num_stars=rating,
+                        item_type="TV Show",
+                        description=data["Plot"],
+                        director=data["Director"],
+                        production=data["Production"],
+                        runtime=int(''.join(i for i in data["Runtime"] if i.isdigit()))
+                        )
+        
+        tags = []
+        for genre in data["Genre"].split(","):
+            tags.append(Tag(name=genre))
+        reviews = [Review(author="Rotten Tomatoes",contents=data["tomatoConsensus"])]
+
+    elif item.item_type == "Game":
+        req = urllib2.Request("http://thegamesdb.net/api/GetGame.php?id=" + value)
+        req.add_unredirected_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.64 Safari/537.31')
+        source = urllib2.urlopen(req).read()
+        data = minidom.parseString(source)   
+
+        results = []
+
+
+        rating = data.getElementsByTagName("Rating")
+        if rating and len(rating[0].childNodes) != 0:
+            rating = rating[0].childNodes[0].nodeValue
+        else:
+            rating = 0
+
+        description = data.getElementsByTagName("Overview")
+        if description and len(description[0].childNodes) != 0:
+            description = description[0].childNodes[0].nodeValue
+        else:
+            description = ""
+
+        director = data.getElementsByTagName("Developer")
+        if director and len(director[0].childNodes) != 0:
+            director = director[0].childNodes[0].nodeValue
+        else:
+            director = ""         
+
+        publisher = data.getElementsByTagName("Publisher")
+        if publisher and len(publisher[0].childNodes) != 0:
+            publisher = publisher[0].childNodes[0].nodeValue
+        else:
+            publisher = "" 
+
+        item = Trackable(id=item.id,    #Adding a 1 at the start, as IMDB ids can contain 'tt'
+                        name=item.name,
+                        amount=0,
+                        average_num_stars=rating,
+                        item_type="Game",
+                        description=description,
+                        director=director,
+                        production=publisher,
+                        release_date= item.release_date,
+                        runtime=0
+                        )
+        tags = []
+        reviews = []
 
     user = User.objects.order_by('id')
     if user:
