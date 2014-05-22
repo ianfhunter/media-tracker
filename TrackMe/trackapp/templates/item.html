@@ -24,7 +24,7 @@
           //enable searchbar
           $('#main_search').keypress(function(e){
             if(e.keyCode==13)
-               window.location = "/search?q="+$("#main_search").val();
+               window.location = "/search?q="+$("#main_search").val() + "&type=" + $('#main_search_dropdown').find(":selected").text();;
           });
           //expand condese
           $('.review_expand').click(function() {

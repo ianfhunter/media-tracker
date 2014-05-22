@@ -23,7 +23,7 @@
       $(document).ready(function(){
           $('#main_search').keypress(function(e){
             if(e.keyCode==13)
-               window.location = "/search?q="+$("#main_search").val();
+               window.location = "/search?q="+$("#main_search").val() + "&type=" + $('#main_search_dropdown').find(":selected").text();;
           });
           $('.review_expand').click(function() {
             item = $(this).parent().parent().parent().find(".review");
@@ -41,8 +41,21 @@
   <body>
 
     <!-- Main Content -->
-    <div id="header"> </div>
-    <div id="header"> <a id="homelink" href="/"><h3 id="sitename">Trackr</h3></a></div>
+    <div id="header">
+      <a id="homelink" href="/"><h3 id="sitename">Trackr</h3></a>
+
+      <div id="search_container">
+        <input id="main_search" type="text" placeholder="Search" class="form-control">
+        <select id="main_search_dropdown" name="media">
+          <option value="">TV Show</option>
+          <option value="">Movie</option>
+          <option value="">Anime</option>
+          <option value="">Manga</option>
+          <option value="">Book</option>
+          <option value="">Game</option>
+        </select>
+      </div>
+    </div>
     <input id="main_search" type="text" placeholder="Search" class="form-control">
 
     <!-- Title Card -->
