@@ -1,0 +1,183 @@
+<html lang="en">
+  <head>
+    <title>Tracker</title>
+
+    <link href="//fonts.googleapis.com/css?family=Nixie One&subset=latin" rel="stylesheet" type="text/css">
+    <link href="/static/css/bootplus.css" rel="stylesheet">  <!--Bootstrap CSS-->
+    <link href="/static/css/main.css" rel="stylesheet">  <!--Bootstrap CSS-->
+    <link href="/static/css/stats.css" rel="stylesheet">  <!--Bootstrap CSS-->
+
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> <!--jQueryUI-->
+
+    <script src="/static/js/chartjs/Chart.min.js"></script> <!--jsCharts-->
+    <script src="/static/js/datacharts.js"></script> <!--Our graphs-->
+
+    <script>
+
+  function createProfileGraphs(){
+    // Type Breakdown
+    var ratingdata = [];
+    var typedata = [
+      {
+          value: 0,
+          color:"#F7464A",
+          highlight: "#FF5A5E",
+          label: "Anime"
+      },
+      {
+          value: 0,
+          color: "#46BFBD",
+          highlight: "#5AD3D1",
+          label: "TV"
+      },
+      {
+          value: 0,
+          color: "#FDB45C",
+          highlight: "#FFC870",
+          label: "Manga"
+      },
+      {
+          value: 0,
+          color: "#BBB45C",
+          highlight: "#CCC45C",
+          label: "Games"
+      },
+      {
+          value: 0,
+          color: "#FDB4BB",
+          highlight: "#FFC4CC",
+          label: "Books"
+      }
+    ];
+    timespent = 0
+    {% for x in item_list %}
+      ratingdata[String( {{x.rating}} )] =  ratingdata[String( {{x.rating}} )] + 1  || 1;
+      typedata[{{x.item_type}}]["value"] =  typedata[{{x.item_type}}]["value"] + 1  || 1;
+      console.log(typedata[{{x.item_type}}]) 
+      timespent = timespent +{{x.time}}
+    {% endfor %}
+   var options = {};
+   var ctx = document.getElementById("main-pie").getContext("2d");
+   var myPieChart = new Chart(ctx).Pie(typedata,options);
+
+    // GENRE BREAKDOWN
+      var genredata = [
+      {
+          value: 100,
+          color:"#27464A",
+          highlight: "#2F5A5E",
+          label: "Anime"
+      },
+      {
+          value: 40,
+          color: "#4600BD",
+          highlight: "#5A00D1",
+          label: "TV"
+      },
+      {
+          value: 60,
+          color: "#FD245C",
+          highlight: "#FF2870",
+          label: "Manga"
+      },
+  ]
+
+   var ctx = document.getElementById("genre-pie").getContext("2d");
+   var myPieChart = new Chart(ctx).Pie(genredata,options);
+
+    // TIME WASTED
+    $("#timewasted").html(
+"                "+(timespent/518400).toFixed(1)+" Years<br>"+
+"                "+(timespent/43200).toFixed(1)+" Months<br>"+
+"                "+(timespent/10080).toFixed(1)+" Weeks<br>"+
+"                "+(timespent/1440).toFixed(1)+" Days<br>"+
+"                "+(timespent/60).toFixed(1)+" Hours<br>"+
+"                "+timespent+" Minutes<br>"
+    );
+
+    // Rating Info
+     var data = {
+      labels: ["1", "2", "3", "4", "5", "6","7","8","9","10"],
+      datasets: [
+          {
+              fillColor: "rgb(220,220,0)",
+              strokeColor: "rgba(220,220,220,0.8)",
+              highlightFill: "rgba(220,220,10,0.75)",
+              highlightStroke: "rgba(220,220,10,1)",
+              data: ratingdata
+          }
+      ]
+     };
+     var options = {
+       scaleShowGridLines : false,
+       tooltipTemplate: "<%= value %>"
+     }
+     var ctx = document.getElementById("rating-barchart").getContext("2d");
+     var myPieChart = new Chart(ctx).Bar(data,options);
+  }
+
+  $(document).ready(function(){
+      createProfileGraphs();
+  });
+
+    </script>
+
+  </head>
+
+  <body>
+    <a href="settings.html" id="settings">&#9881;</a>
+    <!-- Main Content -->
+    <div style="text-align:center;font-size:30%;">
+      <h1 class="green button" id="add_item" ><a href="add_item.html">~</a></h1>
+      <h1 id="site_name" >Tilde</h1>
+      <h1 class="green button" id="add_item" ><a href="add_item.html">~</a></h1>
+    </div>
+    <hr style="margin: -10 0 20;border: 1px solid grey;">
+    <div style="text-align:center">
+<!--        <img src="/static/images/noimage.png" width="200px"/><br> -->
+      <canvas id="main-pie" height="200"></canvas>
+      <h1 class="ribbon" id="title_ribbon" >
+         <strong class="ribbon-content">Anime Breakdown</strong>
+      </h1>
+
+      <div id="chartset">
+        <table>
+          <tr>
+            <td>
+              <canvas id="genre-pie" height="150px"></canvas>
+            </td>
+            <td>
+              <div style="background-color:#ffffff;width:150px;margin-right:40px;margin-left:-30px" id="timewasted">
+              </div>
+            </td>
+            <td>
+              <canvas id="rating-barchart" height="150px"></canvas>
+            </td>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              Genre Breakdown
+            </td>
+            <td>
+              Time Wasted
+            </td>
+            <td style="text-align: center;">
+              Ratings
+            </td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+  </body>
+</html>

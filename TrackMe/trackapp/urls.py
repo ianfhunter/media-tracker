@@ -6,11 +6,10 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^home', 'trackapp.views.home'),
     url(r'^search$', 'trackapp.views.search'),
-    url(r'^item/(?P<value>\w+)$', 'trackapp.views.item'),
-    url(r'^item/(?P<value>\w+)/status_update/$', 'trackapp.views.status_update'),
-    url(r'^user/(?P<value>\w+)$', 'trackapp.views.user'),
-    url(r'^login/$', 'trackapp.views.login'),
+    url(r'^add_item', 'trackapp.views.item'),
+    url(r'^do_add_item', 'trackapp.views.add_item'),
+    url(r'^settings', 'trackapp.views.settings'),
+    url(r'^stats', 'trackapp.views.stats'),
     url(r'^/?$', 'trackapp.views.home'),
 )

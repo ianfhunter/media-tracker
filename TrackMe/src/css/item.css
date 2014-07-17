@@ -1,100 +1,101 @@
-#search_container{
-    margin-top: -45px;
-}
-#header{
-    background-color: indigo;
-    position: fixed;
-    height: 50px;
-    width: 100%;
-    z-index: 1;
+body{
+  background-color: #FBC0FD;
 }
 
-.card, .card_container{
-    margin-top:70px;
-    padding-top: 20px;
-    padding-bottom: 10px;
-    display: inline-table;
-    width: 31.5%;
-    margin-left: 1pc;
+#add_item, #site_name{
+    margin-top: 8px;
+    margin-bottom: 30px; 
 }
-.inner_card{
-    margin: 0px;
-    display: block;
-    width: 100%;
+#add_item{
+    padding: 0 13 0;
 }
-#subtitle{
-    white-space:nowrap;
-    padding-left:3em;
-    font-size: 50%;
+#item_form{
+  width: 500px;
+  margin: 0 auto 0;
 }
-.card-comments{
-    text-align: center;
-    padding-top: 10px !important;
-    padding-bottom: 0px !important;
-    margin-bottom: -10px !important;
+
+#item_form input{
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
-.review{
-    max-height: 100px;
-    overflow: hidden;
+td{
+  width: 100%;
 }
-#cover{
-    max-height: 250px;
-    max-width: 250px;
+tr td:nth-child(2){
+  width: 200%;
 }
-#cover_container{
-    text-align: center;
+#progress{
+  width: 200%;
 }
-#status_selector{
-    width: 100px;
+#mediatype{
+  width: 206px;
 }
-#episode_selector{
-    width: 50px;
+
+/* STAR CSS */
+
+
+
+.star-rating {
+  font-size: 0;
+  white-space: nowrap;
+  display: inline-block;
+  width: 275px;
+  height: 50px;
+  overflow: hidden;
+  position: relative;
+  background: url('data:image/svg+xml;base64,PHN2ZyB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMCIgd2lkdGg9IjY0NSIgaGVpZ2h0PSI1ODUiIGlkPSJzdmcyIj4KICA8ZGVmcyBpZD0iZGVmczQiLz4KICA8ZyBpZD0ibGF5ZXIxIj4KICAgIDxwYXRoIGQ9Ik0gMjk3LjI5NzQ3LDU1MC44NjgyMyBDIDI4My41MjI0Myw1MzUuNDMxOTEgMjQ5LjEyNjgsNTA1LjMzODU1IDIyMC44NjI3Nyw0ODMuOTk0MTIgQyAxMzcuMTE4NjcsNDIwLjc1MjI4IDEyNS43MjEwOCw0MTEuNTk5OSA5MS43MTkyMzgsMzgwLjI5MDg4IEMgMjkuMDM0NzEsMzIyLjU3MDcxIDIuNDEzNjIyLDI2NC41ODA4NiAyLjUwNDg0NzgsMTg1Ljk1MTI0IEMgMi41NDkzNTk0LDE0Ny41NjczOSA1LjE2NTYxNTIsMTMyLjc3OTI5IDE1LjkxNDczNCwxMTAuMTUzOTggQyAzNC4xNTE0MzMsNzEuNzY4MjY3IDYxLjAxNDk5Niw0My4yNDQ2NjcgOTUuMzYwMDUyLDI1Ljc5OTQ1NyBDIDExOS42ODU0NSwxMy40NDM2NzUgMTMxLjY4MjcsNy45NTQyMDQ2IDE3Mi4zMDQ0OCw3LjcyOTYyMzYgQyAyMTQuNzk3NzcsNy40OTQ3ODk2IDIyMy43NDMxMSwxMi40NDkzNDcgMjQ4LjczOTE5LDI2LjE4MTQ1OSBDIDI3OS4xNjM3LDQyLjg5NTc3NyAzMTAuNDc5MDksNzguNjE3MTY3IDMxNi45NTI0MiwxMDMuOTkyMDUgTCAzMjAuOTUwNTIsMTE5LjY2NDQ1IEwgMzMwLjgxMDE1LDk4LjA3OTk0MiBDIDM4Ni41MjYzMiwtMjMuODkyOTg2IDU2NC40MDg1MSwtMjIuMDY4MTEgNjI2LjMxMjQ0LDEwMS4xMTE1MyBDIDY0NS45NTAxMSwxNDAuMTg3NTggNjQ4LjEwNjA4LDIyMy42MjQ3IDYzMC42OTI1NiwyNzAuNjI0NCBDIDYwNy45NzcyOSwzMzEuOTMzNzcgNTY1LjMxMjU1LDM3OC42NzQ5MyA0NjYuNjg2MjIsNDUwLjMwMDk4IEMgNDAyLjAwNTQsNDk3LjI3NDYyIDMyOC44MDE0OCw1NjguMzQ2ODQgMzIzLjcwNTU1LDU3OC4zMjkwMSBDIDMxNy43OTAwNyw1ODkuOTE2NTQgMzIzLjQyMzM5LDU4MC4xNDQ5MSAyOTcuMjk3NDcsNTUwLjg2ODIzIHoiIGlkPSJwYXRoMjQxNyIgc3R5bGU9ImZpbGw6I0ZGRkZGRiIvPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTI5LjI4NTcxLC02NC4yODU3MTQpIiBpZD0iZzIyMjEiLz4KICA8L2c+Cjwvc3ZnPg==');
+  background-size: contain;
 }
-#review_box{
-    width: 100%;
-    margin-right: -10px;
-    right: 9px;
-    height: 100px;
-    position: relative;
+.star-rating i {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 275px;
+  height: 50px;
+  z-index: 1;
+  background: url('data:image/svg+xml;base64,PHN2ZyB4bWxuczpzdmc9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMCIgd2lkdGg9IjY0NSIgaGVpZ2h0PSI1ODUiIGlkPSJzdmcyIj4KICA8ZGVmcyBpZD0iZGVmczQiLz4KICA8ZyBpZD0ibGF5ZXIxIj4KICAgIDxwYXRoIGQ9Ik0gMjk3LjI5NzQ3LDU1MC44NjgyMyBDIDI4My41MjI0Myw1MzUuNDMxOTEgMjQ5LjEyNjgsNTA1LjMzODU1IDIyMC44NjI3Nyw0ODMuOTk0MTIgQyAxMzcuMTE4NjcsNDIwLjc1MjI4IDEyNS43MjEwOCw0MTEuNTk5OSA5MS43MTkyMzgsMzgwLjI5MDg4IEMgMjkuMDM0NzEsMzIyLjU3MDcxIDIuNDEzNjIyLDI2NC41ODA4NiAyLjUwNDg0NzgsMTg1Ljk1MTI0IEMgMi41NDkzNTk0LDE0Ny41NjczOSA1LjE2NTYxNTIsMTMyLjc3OTI5IDE1LjkxNDczNCwxMTAuMTUzOTggQyAzNC4xNTE0MzMsNzEuNzY4MjY3IDYxLjAxNDk5Niw0My4yNDQ2NjcgOTUuMzYwMDUyLDI1Ljc5OTQ1NyBDIDExOS42ODU0NSwxMy40NDM2NzUgMTMxLjY4MjcsNy45NTQyMDQ2IDE3Mi4zMDQ0OCw3LjcyOTYyMzYgQyAyMTQuNzk3NzcsNy40OTQ3ODk2IDIyMy43NDMxMSwxMi40NDkzNDcgMjQ4LjczOTE5LDI2LjE4MTQ1OSBDIDI3OS4xNjM3LDQyLjg5NTc3NyAzMTAuNDc5MDksNzguNjE3MTY3IDMxNi45NTI0MiwxMDMuOTkyMDUgTCAzMjAuOTUwNTIsMTE5LjY2NDQ1IEwgMzMwLjgxMDE1LDk4LjA3OTk0MiBDIDM4Ni41MjYzMiwtMjMuODkyOTg2IDU2NC40MDg1MSwtMjIuMDY4MTEgNjI2LjMxMjQ0LDEwMS4xMTE1MyBDIDY0NS45NTAxMSwxNDAuMTg3NTggNjQ4LjEwNjA4LDIyMy42MjQ3IDYzMC42OTI1NiwyNzAuNjI0NCBDIDYwNy45NzcyOSwzMzEuOTMzNzcgNTY1LjMxMjU1LDM3OC42NzQ5MyA0NjYuNjg2MjIsNDUwLjMwMDk4IEMgNDAyLjAwNTQsNDk3LjI3NDYyIDMyOC44MDE0OCw1NjguMzQ2ODQgMzIzLjcwNTU1LDU3OC4zMjkwMSBDIDMxNy43OTAwNyw1ODkuOTE2NTQgMzIzLjQyMzM5LDU4MC4xNDQ5MSAyOTcuMjk3NDcsNTUwLjg2ODIzIHoiIGlkPSJwYXRoMjQxNyIgc3R5bGU9ImZpbGw6I2ZmMDAwMCIvPgogICAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTI5LjI4NTcxLC02NC4yODU3MTQpIiBpZD0iZzIyMjEiLz4KICA8L2c+Cjwvc3ZnPg==');
+  background-size: contain;
 }
-/* User Pages
-*/
-.rec_cover{
-    max-width: 130px;
-    max-height: 200px;
+.star-rating input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  opacity: 0;
+  display: inline-block;
+  width: 20%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  position: relative;
 }
-.watching_cover{
-    max-width: 130px;
-    height: 200px;
+.star-rating input:hover + i,
+.star-rating input:checked + i {
+  opacity: 1;
 }
-.watching_hover{
-    opacity: 0.0;
-    top: -150px;
-    position: relative;
-    left: 14px;
-    margin-bottom: -80px;
-    display:table;
+.star-rating i {
+  width: 20%;
 }
-.watching_hover:hover{
-    opacity: 0.9;
+
+.star-rating i ~ i {
+  width: 40%;
 }
-.watching_item{
-    display: inline-block;
+.star-rating i ~ i ~ i {
+  width: 60%;
 }
-#sitename{
-    font-family: 'Berkshire Swash', sans-serif;
-    color:rgb(226, 10, 157);    
-    margin-left: 130px;
-    margin-top: 4px;
+.star-rating i ~ i ~ i ~ i {
+  width: 80%;
 }
-#homelink{
-     text-decoration: none;
+.star-rating i ~ i ~ i ~ i ~ i {
+  width: 100%;
 }
-.review-content{
-    padding: 0px 20px;
-    border-bottom: 2px solid;
-    border-color:#727272;
+.choice {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 20px;
+  display: block;
 }
-#increment_section{
-    padding: 0px 10px;
-}
+

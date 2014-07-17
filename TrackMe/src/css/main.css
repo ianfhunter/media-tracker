@@ -1,23 +1,17 @@
-#login, #signup{
+#settings{
     right: 0;
     position: absolute;
-    padding-right: 5px;
+    font-size: 300%;
     top: 0;
     background-color: aliceblue;
-    padding: 3px;
+    padding: 10px;
+    text-decoration: none;
 }
 .modal-header, .modal-footer{
     text-align: center;
 }
 .loginform{
     margin-bottom: 10px;
-}
-h1{
-    font-family: 'Berkshire Swash', sans-serif;
-    font-size: 800%;
-    color:rgb(226, 10, 157);
-    text-align: center;
-    margin-top: 10%;
 }
 #search_container{
     text-align: center;
@@ -33,4 +27,35 @@ margin-top: 40px;
 }
 #main_search_dropdown{
     width: initial;
+}
+#add_item, #site_name{
+    display: inline-block;
+    font-family: 'Nixie One', sans-serif;
+    font-size: 800%;
+    text-align: center;
+    margin-top: 10%;
+}
+#site_name{
+    color:rgb(226, 10, 157); /* pink */
+}
+#add_item{
+    /*color:rgb(255, 196, 61); /* not */*/
+}
+@-webkit-keyframes magentaPulse {
+      from { background-color: #E20A9D; -webkit-box-shadow: 0 0 9px #333; }
+      50% { background-color: #FF00FF ; -webkit-box-shadow: 0 0 18px #a9014b; }
+      to { background-color: #E20A9D; -webkit-box-shadow: 0 0 9px #333; }
+}
+h1.green.button {
+  -webkit-animation-name: magentaPulse;
+  -webkit-animation-duration: 2s;
+  -webkit-animation-iteration-count: infinite;
+  padding: 20px;
+  margin-left: 25px;
+  margin-right: 25px;
+  padding-bottom: 30px;
+}
+h1.green.button a{
+  color: #FFFFFF;
+  text-decoration: none;
 }

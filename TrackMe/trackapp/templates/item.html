@@ -1,213 +1,158 @@
-
-<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
     <title>Tracker</title>
 
-    <link href="//fonts.googleapis.com/css?family=Berkshire Swash&subset=latin" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Nixie One&subset=latin" rel="stylesheet" type="text/css">
     <link href="/static/css/bootplus.css" rel="stylesheet">  <!--Bootstrap CSS-->
-    <link href="/static/css/search.css" rel="stylesheet">  <!--Bootstrap CSS-->
+    <link href="/static/css/main.css" rel="stylesheet">  <!--Bootstrap CSS-->
     <link href="/static/css/item.css" rel="stylesheet">  <!--Bootstrap CSS-->
 
 
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> <!--jQueryUI-->
-    <script src="/static/js/bootstrap.js"></script>
 
-    <script>
+    <script src="/static/js/chartjs/Chart.min.js"></script> <!--jsCharts-->
+    <script src="/static/js/datacharts.js"></script> <!--Our graphs-->
 
-      $(document).ready(function(){
-          //enable searchbar
-          $('#main_search').keypress(function(e){
-            if(e.keyCode==13)
-               window.location = "/search?q="+$("#main_search").val() + "&type=" + $('#main_search_dropdown').find(":selected").text();;
-          });
-          //expand condese
-          $('.review_expand').click(function() {
-            item = $(this).parent().parent().parent().find(".review");
-            if(item.css("max-height") != "100%"){
-              item.css("max-height","100%");              
-            }else{
-              item.css("max-height","100px");              
-            }
-          });
-
-          //fill out status
-          {% if status.progress %}
-          console.log("We have your status")
-          progress = {{status.progress}};
-          switch(progress){
-            case 1:
-              //watched
-              console.log("WATCHED");
-              $(".progress").html('<div class="bar bar-success" style="width: 100%;"></div>');
-              $("#status_selector").children("option")[2].selected = true;
-              break;
-            case 2:
-              //watching
-              console.log("WATCHING");
-              $(".progress").html('<div class="bar" style="width: '+({{status.amount}}/{{item.amount}} * 100) +'%;"></div>')
-              $("#status_selector").children("option")[1].selected = true;
-              break;
-            case 5:
-                console.log("TO WATCH");
-                $("#status_selector").children("option")[3].selected = true;
-  //            $(".progress").html('<div class="bar" style="width: 40%;"></div>')
-              break;
-            case 3:
-              console.log("DROPPED");
-              $(".progress").html('<div class="bar bar-danger" style="width: '+({{status.amount}}/{{item.amount}} * 100) +'%;"></div>')
-              $("#status_selector").children("option")[4].selected = true;
-              break;
-            case 4:
-              console.log("AVOID");
-  //            $(".progress").html('<div class="bar" style="width: 40%;"></div>')
-              $("#status_selector").children("option")[5].selected = true;
-              break;
-          }
-
-          {% endif %}
-      });
-      function handleError(data){
-        console.log(data);
-      }
-      function handleData(data){
-        console.log(data);
-      }
-
-      function update_status(){
-        //TODO: Verify that form info is okay.
-        type = $("#status_selector").val();
-        ep = $("#episode_selector").val();
-        $.ajax({
-          type: "POST",
-          url: "{{item.id}}/status_update/",
-          data: {type: type,episode: ep,user_id: {{user.id}}},
-          success: handleData,
-          error: handleError
-        });
-        switch(type){
-          case "watched":
-            $(".progress").html('<div class="bar bar-success" style="width: 100%;"></div>')
-            break;
-          case "watching":
-            $(".progress").html('<div class="bar" style="width: '+(ep/{{item.amount}} * 100) +'%;"></div>')
-            break;
-          case "towatch":
-//            $(".progress").html('<div class="bar" style="width: 40%;"></div>')
-            break;
-          case "dropped":
-            $(".progress").html('<div class="bar bar-danger" style="width: '+(ep/{{item.amount}} * 100) +'%;"></div>')
-            break;
-          case "avoid":
-//            $(".progress").html('<div class="bar" style="width: 40%;"></div>')
-            break;
-        }
-      }
-
+    <script type="text/javascript">
+    $(document).ready(function(){
+    $(':radio').change(
+      function(){
+        $('.choice').text( this.value + ' stars' );
+      } 
+    )
+    });
     </script>
   </head>
 
   <body>
-
+    <a href="settings.html" id="settings">&#9881;</a>
     <!-- Main Content -->
-    <div id="header"> <a id="homelink" href="/"><h3 id="sitename">Trackr</h3></a>
-    
-    <div id="search_container">
-      <input id="main_search" type="text" placeholder="Search" class="form-control">
-      <select id="main_search_dropdown" name="media">
-        <option value="">TV Show</option>
-        <option value="">Movie</option>
-        <option value="">Anime</option>
-        <option value="">Manga</option>
-        <option value="">Book</option>
-        <option value="">Game</option>
-      </select>
+    <div style="text-align:center;font-size:30%;">
+      <h1 class="green button" id="add_item" ><a href="add_item.html">~</a></h1>
+      <h1 id="site_name" >Tilde</h1>
+      <h1 class="green button" id="add_item" ><a href="add_item.html">~</a></h1>
     </div>
-
-  </div>
-    <!-- Title Card -->
-    <div class="card">
-       <h3 class="card-heading simple">{{item.name}} 
-         <!-- <span id="subtitle"> &nbsp;{{item.total_views}} views  - {{item.average_num_stars}}/5 Stars</span> -->
-         <span id="subtitle"> &nbsp;{{item.item_type}}</span>
-       </h3>
-           <div class="card-body">
-       <div id="cover_container">
-         <img src="{{item.cover_photo.url}}" id="cover" />
-       </div>
-          {{item.description}}   
-       </div>
-    </div>
-
-    <!-- Progress Card -->
-    <div class="card_container">
-      <div class="card inner_card" style="display:compact">
-         <h3 class="card-heading simple">My Status</h3>
-         <div class="card-body">
-            <b>Status:</b> 
-            
-            <select id="status_selector" onChange="update_status()">
-              <option value="none" selected="selected">None</option>
-              <option value="watching">Watching</option>
-              <option value="watched" >Watched</option>
-              <option value="towatch">To Watch</option>
-              <option value="dropped">Dropped</option>
-              <option value="avoid">Avoid</option>
-            </select>
-            <input id="episode_selector" value="0" type="number" onChange="update_status()" min="0" max="{{item.amount}}" /> - {{item.amount}} Eps, {{item.runtime}} mins each
-            
-
-            <p />
-            <b>Progress:</b> 
-            <div class="progress progress-striped active">
-
-            </div>
-            <b>Tags:</b> 
-            {% if tags %}
-              {% for t in tags %}
-              <a href="#">{{t.name}}</a>
-              {% endfor %}
-            {% endif %}
-         </div>
-         <div class="card-comments">
-            <div class="comments-collapse-toggle">
-               <a data-toggle="collapse"  href="#c1-comments">More Info ▼ <i class="icon-angle-down"></i></a>
-            </div>
-            <div id="c1-comments" class="comments collapse">
-               <div class="media">
-                 <b>Producers:</b> {{item.production}}<p />
-                 <b>Director:</b> {{item.director}}<p />
-                 <br />
-                 <b>Purchase: </b> <a href="http://www.amazon.co.uk/s/?field-keywords={{item.name}}">Amazon</a><br />
-                 <b>Torrent: </b><a href="http://www.nyaa.se/?page=search&cats=0_0&filter=0&term={{item.name}}">Nyaa</a>
-               </div>
-            </div>
-         </div>
-      </div>
-
-
-    </div>
-
-    <div class="card">
-       <h3 class="card-heading simple">Reviews & News Articles</h3>
-       {% for review in reviews %}
-         <div class="review-container">
-           <div class="card-body">
-              {{review.author}}:
-              <p />
-              <div class="review">
-                {{review.contents}}
+  <hr style="margin: -10 0 20;border: 1px solid grey;">
+    <div style="text-align:center">
+      <form action="do_add_item.html" method="post" id="item_form">
+        <table>
+          <!-- -->
+          <tr>
+            <td>
+              Title
+            </td>
+            <td>
+              <input id="title" type="text" name="title"><br> 
+            </td>
+          </tr>
+          <!-- -->
+          <tr>
+            <td>
+              Alt. Titles
+            </td>
+            <td>
+              <input id="alttitle" type="text" name="alttitle"><br> 
+            </td>
+          </tr>
+          <!-- -->
+          <tr>
+            <td>
+              Type
+            </td>
+            <td>
+              <select name="mediatype" id="mediatype">
+                <option value="anime">Anime</option>
+                <option value="manga">Manga</option>
+                <option value="game">Game</option>
+                <option value="music">Music</option>
+                <option value="book">Book</option>
+                <option value="tv">TV</option>
+              </select>
+            </td>
+          </tr>
+          <!-- -->
+          <tr>
+            <td>
+              Cover
+            </td>
+            <td>
+              <img src="/static/images/noimage.png" width="200px"/><br>
+              <input id="coverphoto" type="file" name="coverphoto" accept="image/*">
+            </td>
+          </tr>          
+          <!-- -->
+          <tr>
+            <td>
+              Status
+            </td>
+            <td>
+              <div id="progress">
+                <input type="radio" name="progress" value="wishlist">Wishlist
+                <input type="radio" name="progress" value="completed">Completed
+                <input type="radio" name="progress" value="in_progress">In Progress
+                <input type="radio" name="progress" value="avoid">Avoid
+                <input type="radio" name="progress" value="dropped">Dropped
               </div>
-           </div>
-         </div>
-       {% endfor %}
-       </div>
+            </td>
+          </tr>    
+          <!-- -->
+          <tr>
+            <td>
+              Rating
+            </td>
+            <td>
+              <span class="star-rating" >
+                <input type="radio" id="stars" name="rating" value="1"><i></i>
+                <input type="radio" id="stars" name="rating" value="2"><i></i>
+                <input type="radio" id="stars" name="rating" value="3"><i></i>
+                <input type="radio" id="stars" name="rating" value="4"><i></i>
+                <input type="radio" id="stars" name="rating" value="5"><i></i>
+              </span>
+            </td>
+          </tr>  
+          <!-- -->
+          <tr>
+            <td>
+              Amount
+            </td>
+            <td>
+              <input id="amount"  type="number" name="amount" style="width:70px" maxlength=3 >
+            </td>
+          </tr>  
+          <!-- -->
+          <tr>
+            <td>
+              Length (Minutes)
+            </td>
+            <td>
+              <input id="length" type="number" name="length" style="width:70px" maxlength=3 >
+            </td>
+          </tr>  
+          <!-- -->
+          <tr>
+            <td>
+              Tags (Comma Seperated)
+            </td>
+            <td>
+              <input id="tags" type="text" name="genre" >
+            </td>
+          </tr>  
+          <!-- -->
+          <tr>
+            <td>
+              Notes/Websites:
+            </td>
+            <td>
+              <input id="notes" type="text" name="notes"> 
+            </td>
+          </tr>  
+        </table>
+
+        <input type="submit" value="Submit">
+      </form>
     </div>
+
 
 
     <!-- Bootstrap core JavaScript

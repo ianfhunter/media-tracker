@@ -1,0 +1,49 @@
+<html lang="en">
+  <head>
+    <title>Tracker</title>
+
+    <link href="//fonts.googleapis.com/css?family=Nixie One&subset=latin" rel="stylesheet" type="text/css">
+    <link href="/static/css/bootplus.css" rel="stylesheet">  <!--Bootstrap CSS-->
+    <link href="/static/css/main.css" rel="stylesheet">  <!--Bootstrap CSS-->
+    <link href="/static/css/item.css" rel="stylesheet">  <!--Bootstrap CSS-->
+
+
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> <!--jQueryUI-->
+
+    <script src="/static/js/chartjs/Chart.min.js"></script> <!--jsCharts-->
+    <script src="/static/js/datacharts.js"></script> <!--Our graphs-->
+
+    <script type="text/javascript">
+    $(document).ready(function(){
+    $(':radio').change(
+      function(){
+        $('.choice').text( this.value + ' stars' );
+      } 
+    )
+    });
+    </script>
+  </head>
+
+  <body>
+    <a href="settings.html" id="settings">&#9881;</a>
+    <!-- Main Content -->
+    <div style="text-align:center;font-size:30%;">
+      <h1 class="green button" id="add_item" ><a href="add_item.html">~</a></h1>
+      <h1 id="site_name" >Tilde</h1>
+      <h1 class="green button" id="add_item" ><a href="add_item.html">~</a></h1>
+    </div>
+    <hr style="margin: -10 0 20;border: 1px solid grey;">
+    <div style="text-align:center">
+       <img src="/static/images/noimage.png" width="200px"/><br>
+    </div>
+
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+  </body>
+</html>

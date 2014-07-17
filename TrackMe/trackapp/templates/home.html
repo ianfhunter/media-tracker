@@ -1,59 +1,21 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
     <title>Tracker</title>
 
-    <link href="//fonts.googleapis.com/css?family=Berkshire Swash&subset=latin" rel="stylesheet" type="text/css">
+    <link href="//fonts.googleapis.com/css?family=Nixie One&subset=latin" rel="stylesheet" type="text/css">
     <link href="/static/css/bootplus.css" rel="stylesheet">  <!--Bootstrap CSS-->
     <link href="/static/css/main.css" rel="stylesheet">  <!--Bootstrap CSS-->
 
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script> <!--jQueryUI-->
 
+    <script src="/static/js/chartjs/Chart.min.js"></script> <!--jsCharts-->
+    <script src="/static/js/datacharts.js"></script> <!--Our graphs-->
+
     <script>
-
-      function post_to_url(path, params, method) {
-          method = method || "post"; // Set method to post by default if not specified.
-
-          // The rest of this code assumes you are not using a library.
-          // It can be made less wordy if you use one.
-          var form = document.createElement("form");
-          form.setAttribute("method", method);
-          form.setAttribute("action", path);
-
-          for(var key in params) {
-              if(params.hasOwnProperty(key)) {
-                  var hiddenField = document.createElement("input");
-                  hiddenField.setAttribute("type", "hidden");
-                  hiddenField.setAttribute("name", key);
-                  hiddenField.setAttribute("value", params[key]);
-
-                  form.appendChild(hiddenField);
-               }
-          }
-
-          document.body.appendChild(form);
-          form.submit();
-      }
-
       $(document).ready(function(){
-          $('#main_search').keypress(function(e){
-            if(e.keyCode==13)
-               window.location = "search?q="+$("#main_search").val() + "&type=" + $('#main_search_dropdown').find(":selected").text();;
-          });
-          $("#login_btn").click(function(){
-            console.log("hi");
-            post_to_url('login/', {username: $("#username").val() ,password: $("#password").val() });
-          })
+          createCoverGraphs();
       });
-
-
-
-
     </script>
     <style type="text/css">
       body{
@@ -64,30 +26,20 @@
   </head>
 
   <body>
-    {% if not user %}
-    <a href="#" data-toggle="modal" data-target="#myModal" id="login">Sign Up / Login</a>
-    {% else %}
-    <a href="user/{{user.id}}" id="login"> {{user.username}}</a>
+    <a href="settings.html" id="settings">&#9881;</a>
 
-    {% endif %}
     <!-- Main Content -->
-      <h1>Trackr</h1>
+    <div style="text-align:center">
+      <h1 class="green button" id="add_item" ><a href="add_item.html">~</a></h1>
+      <h1 id="site_name" >Tilde</h1>
+      <h1 class="green button" id="add_item" ><a href="add_item.html">~</a></h1>
+    </div>
 <!--      <input id="main_search" type="text" placeholder="Search" class="form-control">-->
-
-<div class="input-prepend" id="search_home">
-  <!-- Search Bar -->  
-  <input class="span2 form-control" id="main_search" type="text">
-  <!-- Search Dropdown-->
-  <select id="main_search_dropdown" name="media">
-    <option value="">TV Show</option>
-    <option value="">Movie</option>
-    <option value="">Anime</option>
-    <option value="">Manga</option>
-    <option value="">Book</option>
-    <option value="">Game</option>
-  </select>
-</div>
-
+    <div  style="text-align:center">
+      <a href="stats">
+        <canvas id="graph" width="800" height="350"></canvas>
+      </a>
+    </div>
 
 
 
