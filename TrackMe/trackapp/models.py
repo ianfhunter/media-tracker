@@ -25,6 +25,9 @@ class MediaType(enum.Enum):
 class TrackItem(models.Model):
     name = models.CharField(max_length=200)                          #Name of the TrackItem item e.g. "Naruto Shippuden"
     alt_names = models.CharField(blank=True,max_length=1000)         #Alternate Names in Comma Delimited Format.
+    
+    created_at = models.DateTimeField(editable=False)
+
 
     item_type = enum.EnumField(MediaType, default=MediaType.UNASSIGNED)     #Game, Tv show, etc
 

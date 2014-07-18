@@ -9,6 +9,7 @@ import datetime
 import json
 from xml.dom import minidom
 import hashlib, uuid
+import datetime
 
 def to_enum(word):
     if word == "anime":
@@ -61,7 +62,8 @@ def add_item(request):
             amount=data["amount"],
             time=data["length"],
             tags=data["genre"],
-            notes=data["notes"]
+            notes=data["notes"],
+            created_at=datetime.datetime.today()
             )
         new_item.save()
         return HttpResponse("Submitted")
@@ -82,3 +84,8 @@ def settings(request):
     d = {}
     return render_to_response('settings.html', d)
 
+def library(request):
+    d = {}
+    items = TrackItem.objects.all()
+    d = {"item_list":items} 
+    return render_to_response('library.html', d)

@@ -11,5 +11,6 @@ urlpatterns = patterns('',
     url(r'^do_add_item', 'trackapp.views.add_item'),
     url(r'^settings', 'trackapp.views.settings'),
     url(r'^stats', 'trackapp.views.stats'),
-    url(r'^/?$', 'trackapp.views.home'),
+    url(r'^library', 'trackapp.views.library'),
+    url(r'^/?', 'trackapp.views.home'),
 )

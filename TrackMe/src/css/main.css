@@ -1,12 +1,28 @@
+
+#library{
+left: 0;
+height: 35px;
+position: absolute;
+font-size: 300%;
+top: 0;
+/*background-color: aliceblue;*/
+padding: 10px;
+text-decoration: none;
+color: #4d90fe;
+}
+
+#barrier{
+}
 #settings{
     right: 0;
     position: absolute;
     font-size: 300%;
     top: 0;
-    background-color: aliceblue;
+    /*background-color: aliceblue;*/
     padding: 10px;
     text-decoration: none;
 }
+
 .modal-header, .modal-footer{
     text-align: center;
 }

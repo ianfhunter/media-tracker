@@ -16,10 +16,44 @@
 
     <script>
 
+function increase_brightness(hex, percent){
+    // strip the leading # if it's there
+    hex = hex.replace(/^\s*#|\s*$/g, '');
+
+    // convert 3 char codes --> 6, e.g. `E0F` --> `EE00FF`
+    if(hex.length == 3){
+        hex = hex.replace(/(.)/g, '$1$1');
+    }
+
+    var r = parseInt(hex.substr(0, 2), 16),
+        g = parseInt(hex.substr(2, 2), 16),
+        b = parseInt(hex.substr(4, 2), 16);
+
+    return '#' +
+       ((0|(1<<8) + r + (256 - r) * percent / 100).toString(16)).substr(1) +
+       ((0|(1<<8) + g + (256 - g) * percent / 100).toString(16)).substr(1) +
+       ((0|(1<<8) + b + (256 - b) * percent / 100).toString(16)).substr(1);
+}
+
+function getRandomColor() {
+    var letters = '0123456789ABCDEF'.split('');
+    var color = '#';
+    for (var i = 0; i < 6; i++ ) {
+        color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+}
+
   function createProfileGraphs(){
     // Type Breakdown
     var ratingdata = [];
     var typedata = [
+      {
+          value: 0,
+          color:"#44444A",
+          highlight: "#33335E",
+          label: "Unknown"
+      },
       {
           value: 0,
           color:"#F7464A",
@@ -51,38 +85,68 @@
           label: "Books"
       }
     ];
+    genredata = [];
     timespent = 0
     {% for x in item_list %}
       ratingdata[String( {{x.rating}} )] =  ratingdata[String( {{x.rating}} )] + 1  || 1;
       typedata[{{x.item_type}}]["value"] =  typedata[{{x.item_type}}]["value"] + 1  || 1;
-      console.log(typedata[{{x.item_type}}]) 
+
+      // Tags
+      tag_array = "{{x.tags}}".split(",");
+      at = 0;
+      for(var i =0;i != tag_array.length;i++){
+        already_included = false;
+        for(var j=0;j != genredata.length;j++){
+          console.log(genredata[j]);
+          if(genredata[j]["label"] == [tag_array[i]] ){
+            console.log("Inside!")
+            already_included = true;
+            at = i;  //save position of element
+            break;
+          }
+        }
+        if (!already_included){
+          slice_color = getRandomColor()
+          genredata.push(
+                      {
+                        value: 1,
+                        color: slice_color,
+                        highlight: increase_brightness(slice_color,5),
+                        label: tag_array[i]
+                      }
+          );
+        }else{
+          genredata[at]["value"] = genredata[at]["value"] + 1;
+          at = 0;  //reset    
+        }
+      }
       timespent = timespent +{{x.time}}
     {% endfor %}
    var options = {};
    var ctx = document.getElementById("main-pie").getContext("2d");
    var myPieChart = new Chart(ctx).Pie(typedata,options);
 
-    // GENRE BREAKDOWN
-      var genredata = [
-      {
-          value: 100,
-          color:"#27464A",
-          highlight: "#2F5A5E",
-          label: "Anime"
-      },
-      {
-          value: 40,
-          color: "#4600BD",
-          highlight: "#5A00D1",
-          label: "TV"
-      },
-      {
-          value: 60,
-          color: "#FD245C",
-          highlight: "#FF2870",
-          label: "Manga"
-      },
-  ]
+  //   // GENRE BREAKDOWN
+  //     var genredata = [
+  //     {
+  //         value: 100,
+  //         color:"#27464A",
+  //         highlight: "#2F5A5E",
+  //         label: "AnimeAAA"
+  //     },
+  //     {
+  //         value: 40,
+  //         color: "#4600BD",
+  //         highlight: "#5A00D1",
+  //         label: "TV"
+  //     },
+  //     {
+  //         value: 60,
+  //         color: "#FD245C",
+  //         highlight: "#FF2870",
+  //         label: "Manga"
+  //     },
+  // ]
 
    var ctx = document.getElementById("genre-pie").getContext("2d");
    var myPieChart = new Chart(ctx).Pie(genredata,options);
@@ -128,8 +192,11 @@
 
   <body>
     <a href="settings.html" id="settings">&#9881;</a>
+    <a href="library.html">
+      <img src="/static/images/list.svg" id="library" />
+    </a>
     <!-- Main Content -->
-    <div style="text-align:center;font-size:30%;">
+    <div style="text-align:center;font-size:30%;" id="barrier" >
       <h1 class="green button" id="add_item" ><a href="add_item.html">~</a></h1>
       <h1 id="site_name" >Tilde</h1>
       <h1 class="green button" id="add_item" ><a href="add_item.html">~</a></h1>
